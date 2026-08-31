@@ -133,13 +133,17 @@ function SpecTable({
 }) {
   return (
     <div>
-      {heading ? (
-        <div className="w-1/2 rounded-t-[2mm] bg-sheet-master px-[1.4mm] py-[0.5mm] text-center">
-          <span className="text-[2.3mm] font-extrabold uppercase tracking-[0.04em] text-sheet-navy-foreground">
-            {heading}
-          </span>
-        </div>
-      ) : null}
+      <div
+        className={cn(
+          "flex h-[3.2mm] w-1/2 items-center justify-center rounded-t-[2mm] px-[1.4mm]",
+          heading ? "bg-sheet-master" : "invisible",
+        )}
+      >
+        <span className="text-[2.3mm] font-extrabold uppercase leading-none tracking-[0.04em] text-sheet-navy-foreground">
+          {heading ?? "."}
+        </span>
+      </div>
+
       <div className="overflow-hidden rounded-[2mm] bg-sheet-value">
         <table className="w-full table-fixed border-collapse text-[2.1mm]">
           <tbody>
