@@ -210,7 +210,7 @@ function SpecRow({
 }: {
   row: SheetRow;
   emphasis?: boolean;
-  height?: string;
+  height?: string | undefined;
 }) {
   return (
     <tr style={{ height }}>
