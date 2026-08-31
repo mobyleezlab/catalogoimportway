@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 /** Altura fixa das células para que NCM e MASTER fiquem na mesma direção. */
 const CELL =
-  "h-[3.6mm] border-b-[0.25mm] border-sheet-page px-[1.4mm] py-[0.5mm] align-middle last:border-b-0";
+  "h-[3.6mm] border-b-[0.25mm] border-sheet-page px-[1mm] py-[0.5mm] align-middle last:border-b-0";
 
 /** Cores alternadas das linhas das tabelas. */
 const ROW_COLORS = ["bg-[#f2f1ef]", "bg-[#e6e6e4]"];
@@ -184,7 +184,7 @@ function SpecTable({
     <div>
       <div
         className={cn(
-          "flex h-[2.6mm] w-[58%] items-center justify-center rounded-t-[2mm] px-[1.4mm]",
+          "flex h-[2.6mm] w-[62%] items-center justify-center rounded-t-[2mm] px-[1.4mm]",
           heading ? "bg-sheet-master" : "invisible",
         )}
       >
@@ -217,7 +217,7 @@ function SpecTable({
                       <th
                         className={cn(
                           CELL,
-                          "w-[58%] text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
+                          "w-[62%] text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
                           bg,
                         )}
                       >
@@ -277,7 +277,7 @@ function SpecRow({
       <th
         className={cn(
           CELL,
-          "w-[58%] whitespace-nowrap text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
+          "w-[62%] whitespace-nowrap text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
           bgClass,
           emphasis ? "text-[2.3mm] tracking-[0.04em]" : "text-[2mm]",
         )}
