@@ -9,6 +9,11 @@ const CELL =
 export function ProductSheetCard({ product }: { product: SheetProduct }) {
   const half = Math.ceil(product.bullets.length / 2);
   const columns = [product.bullets.slice(0, half), product.bullets.slice(half)];
+  const variantRows: SheetVariant[][] = [];
+  for (let i = 0; i < product.variants.length; i += 4) {
+    variantRows.push(product.variants.slice(i, i + 4));
+  }
+
 
   return (
     <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page pt-[1.2mm]">
