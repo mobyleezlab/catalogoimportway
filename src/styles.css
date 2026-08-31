@@ -46,6 +46,61 @@
   src: url("https://fonts.cdnfonts.com/s/72205/FuturaCyrillicExtraBold.woff") format("woff");
 }
 
+/*
+ * Os arquivos da Futura PT não trazem os glifos acentuados do português
+ * (Á, É, Ó, Ç, ³...). Para esses caracteres usamos a Futura LT — desenho
+ * praticamente idêntico — restrita ao intervalo Latin-1/Latin Extended.
+ */
+@font-face {
+  font-family: "Futura PT";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT-Light.woff") format("woff");
+  unicode-range: U+00A0-024F, U+2018-201F, U+20A0-20BF;
+}
+@font-face {
+  font-family: "Futura PT";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT-Book.woff") format("woff");
+  unicode-range: U+00A0-024F, U+2018-201F, U+20A0-20BF;
+}
+@font-face {
+  font-family: "Futura PT";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT.woff") format("woff");
+  unicode-range: U+00A0-024F, U+2018-201F, U+20A0-20BF;
+}
+@font-face {
+  font-family: "Futura PT";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT-Bold.woff") format("woff");
+  unicode-range: U+00A0-024F, U+2018-201F, U+20A0-20BF;
+}
+@font-face {
+  font-family: "Futura PT";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT-Bold.woff") format("woff");
+  unicode-range: U+00A0-024F, U+2018-201F, U+20A0-20BF;
+}
+@font-face {
+  font-family: "Futura PT";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT-ExtraBold.woff") format("woff");
+  unicode-range: U+00A0-024F, U+2018-201F, U+20A0-20BF;
+}
+
+
 @custom-variant dark (&:is(.dark *));
 
 /*
