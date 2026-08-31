@@ -41,6 +41,7 @@
   --color-sheet-master: var(--sheet-master);
   --color-sheet-photo: var(--sheet-photo);
   --color-sheet-page: var(--sheet-page);
+  --color-sheet-text: var(--sheet-text);
 
 
   --color-background: var(--background);
@@ -93,6 +94,7 @@
   --sheet-master: oklch(0.55 0.004 95);
   --sheet-photo: oklch(0.913 0.003 100);
   --sheet-page: oklch(0.913 0.003 100);
+  --sheet-text: #5e5e5e;
 
   --background: oklch(0.985 0.004 95);
   --foreground: oklch(0.21 0.008 260);
