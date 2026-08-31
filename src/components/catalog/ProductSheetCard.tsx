@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 /** Altura fixa das células para que NCM e MASTER fiquem na mesma direção. */
 const CELL =
-  "h-[3.3mm] border-b-[0.25mm] border-sheet-page px-[1.4mm] py-[0.4mm] align-middle last:border-b-0";
+  "h-[3.6mm] border-b-[0.25mm] border-sheet-page px-[1.4mm] py-[0.5mm] align-middle last:border-b-0";
 
 /** Cores alternadas das linhas das tabelas. */
 const ROW_COLORS = ["bg-[#f2f1ef]", "bg-[#e6e6e4]"];
@@ -19,10 +19,10 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
 
   // Alturas compartilhadas: linha a linha, NCM alinha com QUANTIDADE, etc.
   const barcodeCount = product.barcodes?.length ?? 0;
-  const barcodeHeight = Math.max(3.3, barcodeCount * 2.1 + 1.2);
+  const barcodeHeight = Math.max(3.6, barcodeCount * 2.2 + 1.4);
   const rowCount = 1 + Math.max(product.product.length, product.master.length - 1);
   const rowHeights = Array.from({ length: rowCount + 1 }, (_, index) =>
-    index === 1 && barcodeCount ? `${barcodeHeight}mm` : "3.3mm",
+    index === 1 && barcodeCount ? `${barcodeHeight}mm` : "3.6mm",
   );
 
   return (
@@ -148,7 +148,9 @@ function SpecTable({
   rowHeights?: string[];
 }) {
   let rowIndex = 0;
+  let lineIndex = 0;
   const nextHeight = () => rowHeights[rowIndex++];
+  const nextBg = () => ROW_COLORS[lineIndex++ % ROW_COLORS.length];
 
   return (
     <div>
@@ -170,7 +172,7 @@ function SpecTable({
               <SpecRow
                 row={{ label: headingLabel, value: headingValue ?? "" }}
                 emphasis
-                index={0}
+                bgClass={nextBg()}
                 height={nextHeight()}
               />
             ) : null}
@@ -179,14 +181,15 @@ function SpecTable({
                 <th
                   className={cn(
                     CELL,
-                    "w-1/2 bg-[#e6e6e4] text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
+                    "w-1/2 text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
+                    nextBg(),
                   )}
                 >
                   Código
                   <br />
                   de barras
                 </th>
-                <td className={cn(CELL, "bg-[#f2f1ef] text-sheet-text")}>
+                <td className={cn(CELL, "text-sheet-text", nextBg())}>
                   <ul className="space-y-[0.3mm]">
                     {barcodes.map((barcode) => (
                       <li key={barcode.code} className="flex items-center gap-[1.2mm]">
@@ -206,11 +209,11 @@ function SpecTable({
                 </td>
               </tr>
             ) : null}
-            {rows.map((row, index) => (
+            {rows.map((row) => (
               <SpecRow
                 key={row.label}
                 row={row}
-                index={index + (headingLabel ? 1 : 0) + (barcodes?.length ? 1 : 0)}
+                bgClass={nextBg()}
                 height={nextHeight()}
               />
             ))}
@@ -224,15 +227,14 @@ function SpecTable({
 function SpecRow({
   row,
   emphasis,
-  index,
+  bgClass,
   height,
 }: {
   row: SheetRow;
   emphasis?: boolean;
-  index: number;
+  bgClass: string;
   height?: string | undefined;
 }) {
-  const bgClass = ROW_COLORS[index % ROW_COLORS.length];
   return (
     <tr style={{ height }}>
       <th
