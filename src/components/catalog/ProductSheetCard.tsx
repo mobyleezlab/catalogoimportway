@@ -264,15 +264,15 @@ function SpecRow({
   row,
   emphasis,
   bgClass,
-  height,
+  style,
 }: {
   row: SheetRow;
   emphasis?: boolean;
   bgClass: string;
-  height?: string | undefined;
+  style?: React.CSSProperties | undefined;
 }) {
   return (
-    <tr style={{ height }}>
+    <tr style={style}>
       <th
         className={cn(
           CELL,
