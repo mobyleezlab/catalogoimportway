@@ -81,14 +81,16 @@ function VariantTag({ variant }: { variant: SheetVariant }) {
   return (
     <div
       className={cn(
-        "min-w-[17mm] rounded-[1mm] px-[1.6mm] py-[1.1mm] text-center leading-none",
+        "min-w-[16mm] rounded-[1mm] px-[1.4mm] py-[1.1mm] text-center leading-none",
         accent
           ? "bg-sheet-navy text-sheet-navy-foreground"
           : "border-[0.25mm] border-sheet-edge bg-card text-sheet-navy",
       )}
     >
-      <p className="text-[2.6mm] font-extrabold tracking-[0.01em]">{variant.sku}</p>
-      <p className="mt-[0.7mm] text-[1.9mm] font-medium uppercase tracking-[0.04em]">
+      <p className="whitespace-nowrap text-[2.5mm] font-extrabold tracking-[0.01em]">
+        {variant.sku}
+      </p>
+      <p className="mt-[0.7mm] whitespace-nowrap text-[1.9mm] font-medium uppercase tracking-[0.04em]">
         {variant.color}
       </p>
     </div>
