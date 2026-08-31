@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductSheetCard } from "@/components/catalog/ProductSheetCard";
-import { sheetProducts } from "@/data/sheet-products";
+import { SheetEditorDialog } from "@/components/catalog/SheetEditorDialog";
+import { useCatalogProducts } from "@/hooks/useCatalogProducts";
+import { Button } from "@/components/ui/button";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
