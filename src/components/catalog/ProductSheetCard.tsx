@@ -72,7 +72,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
         </div>
 
         {/* Faixa inferior: tabelas técnicas + imagem + selo Inmetro */}
-        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_84mm] gap-x-[2.5mm] pt-[1.5mm]">
+        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm] pt-[1.5mm]">
           <div className="grid min-h-0 grid-cols-2 items-start gap-x-[2.5mm]">
             <SpecTable
               headingLabel="NCM"
@@ -184,7 +184,7 @@ function SpecTable({
     <div>
       <div
         className={cn(
-          "flex h-[2.6mm] w-[62%] items-center justify-center rounded-t-[2mm] px-[1.4mm]",
+          "flex h-[2.6mm] w-[54%] items-center justify-center rounded-t-[2mm] px-[1.4mm]",
           heading ? "bg-sheet-master" : "invisible",
         )}
       >
@@ -217,7 +217,7 @@ function SpecTable({
                       <th
                         className={cn(
                           CELL,
-                          "w-[62%] text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
+                          "w-[54%] text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
                           bg,
                         )}
                       >
@@ -277,7 +277,7 @@ function SpecRow({
       <th
         className={cn(
           CELL,
-          "w-[62%] whitespace-nowrap text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
+          "w-[54%] whitespace-nowrap text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
           bgClass,
           emphasis ? "text-[2.3mm] tracking-[0.04em]" : "text-[2mm]",
         )}
