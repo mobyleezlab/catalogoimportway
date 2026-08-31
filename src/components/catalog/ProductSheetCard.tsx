@@ -14,10 +14,10 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
         </h2>
       </header>
 
-      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_62mm] gap-x-[2mm] px-[4mm] pb-[2mm] pt-[1.3mm]">
-        {/* Coluna esquerda: marcadores + tabelas técnicas */}
-        <div className="flex min-w-0 flex-col gap-[1.4mm]">
-          <div className="grid grid-cols-2 gap-x-[3mm]">
+      <div className="flex min-h-0 flex-1 flex-col gap-[1.4mm] px-[4mm] pb-[2mm] pt-[1.3mm]">
+        {/* Faixa superior: marcadores à esquerda, etiquetas de SKU/cor à direita */}
+        <div className="flex items-start gap-x-[3mm]">
+          <div className="grid min-w-0 flex-1 grid-cols-2 gap-x-[3mm]">
             {columns.map((column, index) => (
               <ul key={index} className="space-y-[0.4mm]">
                 {column.map((bullet) => (
@@ -35,7 +35,17 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
             ))}
           </div>
 
-          <div className="grid min-h-0 flex-1 grid-cols-2 items-start gap-x-[3mm]">
+          {/* Etiquetas de SKU/cor: 1 a 6 variantes em uma única linha; acima disso quebra */}
+          <div className="flex shrink-0 flex-wrap justify-end gap-[1mm]">
+            {product.variants.map((variant) => (
+              <VariantTag key={variant.sku} variant={variant} />
+            ))}
+          </div>
+        </div>
+
+        {/* Faixa inferior: tabelas técnicas + imagem */}
+        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_62mm] gap-x-[2mm]">
+          <div className="grid min-h-0 grid-cols-2 items-start gap-x-[3mm]">
             <SpecTable
               rows={[{ label: "NCM", value: product.ncm }]}
               barcodes={product.barcodes}
@@ -43,17 +53,8 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
             />
             <SpecTable rows={product.master} heading="Master" />
           </div>
-        </div>
 
-        {/* Coluna da direita: etiquetas de variante + imagem */}
-        <div className="flex min-w-0 flex-col">
-          {/* Etiquetas de SKU/cor: suporta de 1 a 6 variantes com quebra em grade */}
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(17mm,1fr))] gap-[1mm]">
-            {product.variants.map((variant) => (
-              <VariantTag key={variant.sku} variant={variant} />
-            ))}
-          </div>
-          <div className="min-h-0 flex-1 pt-[1.5mm]">
+          <div className="min-h-0">
             {product.image.url ? (
               <img
                 src={product.image.url}
