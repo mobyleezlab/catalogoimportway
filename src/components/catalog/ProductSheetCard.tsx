@@ -56,8 +56,8 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
             <SpecTable heading="Master" rows={product.master} />
           </div>
 
-          <div className="grid min-h-0 grid-cols-[minmax(0,1fr)_15mm] items-end gap-x-[1.5mm]">
-            <div className="min-h-0 self-stretch">
+          <div className="relative min-h-0">
+            <div className="h-full w-full">
               {product.image.url ? (
                 <img
                   src={product.image.url}
@@ -75,7 +75,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
             </div>
 
             {/* Espaço reservado ao selo do Inmetro no canto da ficha */}
-            <div className="flex h-[15mm] w-[15mm] flex-col items-center justify-center rounded-[1.2mm] border-[0.25mm] border-dashed border-sheet-edge bg-sheet-value text-center">
+            <div className="absolute bottom-0 right-0 flex h-[13mm] w-[13mm] flex-col items-center justify-center rounded-[1.2mm] border-[0.25mm] border-dashed border-sheet-edge bg-sheet-value text-center">
               <span className="text-[1.8mm] font-extrabold uppercase leading-[1.15] tracking-[0.06em] text-sheet-navy">
                 Inmetro
               </span>
@@ -204,11 +204,11 @@ function SpecRow({ row }: { row: SheetRow }) {
       <th
         className={cn(
           CELL,
-          "w-1/2 bg-sheet-label text-center text-[2.1mm] font-extrabold uppercase tracking-[0.02em] text-sheet-navy",
+          "w-1/2 whitespace-nowrap bg-sheet-label text-center text-[2mm] font-extrabold uppercase tracking-[0.01em] text-sheet-navy",
         )}
       >
         {row.label}
-        {row.unit ? <span className="text-[1.9mm] font-medium"> {row.unit}</span> : null}
+        {row.unit ? <span className="text-[1.75mm] font-medium"> {row.unit}</span> : null}
       </th>
       <td className={cn(CELL, "bg-sheet-value text-center text-[2.1mm] text-sheet-text")}>
         {row.value}
