@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { SheetBarcode, SheetProduct, SheetRow, SheetVariant } from "@/data/sheet-products";
 import { cn } from "@/lib/utils";
 
@@ -269,7 +270,7 @@ function SpecRow({
   row: SheetRow;
   emphasis?: boolean;
   bgClass: string;
-  style?: React.CSSProperties | undefined;
+  style?: CSSProperties | undefined;
 }) {
   return (
     <tr style={style}>
