@@ -110,7 +110,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
 
             {/* Espaço reservado ao selo do Inmetro no canto da ficha */}
             <div className="absolute bottom-0 right-0 flex h-[13mm] w-[13mm] flex-col items-center justify-center rounded-[1.2mm] border-[0.25mm] border-dashed border-sheet-edge bg-sheet-value text-center">
-              <span className="text-[1.8mm] font-extrabold uppercase leading-[1.15] tracking-[0.06em] text-sheet-navy">
+              <span className="text-[1.8mm] font-bold uppercase leading-[1.15] tracking-[0.06em] text-sheet-navy">
                 Inmetro
               </span>
               <span className="mt-[0.5mm] text-[1.4mm] uppercase leading-[1.1] tracking-[0.04em] text-sheet-text">
@@ -163,7 +163,7 @@ function VariantTag({ variant }: { variant: SheetVariant }) {
           : "border-[0.25mm] border-sheet-edge bg-card text-sheet-navy",
       )}
     >
-      <p className="whitespace-nowrap text-[2.1mm] font-extrabold tracking-[0.01em]">
+      <p className="whitespace-nowrap text-[2.1mm] font-bold tracking-[0.01em]">
         {variant.sku}
       </p>
       <p className="mt-[0.4mm] whitespace-nowrap text-[1.7mm] font-medium uppercase tracking-[0.04em]">
@@ -214,7 +214,7 @@ function SpecTable({
           heading ? "bg-sheet-master" : "invisible",
         )}
       >
-        <span className="text-[2mm] font-extrabold uppercase leading-none tracking-[0.04em] text-sheet-navy-foreground">
+        <span className="text-[2mm] font-bold uppercase leading-none tracking-[0.04em] text-sheet-navy-foreground">
           {heading ?? "."}
         </span>
       </div>
@@ -243,7 +243,7 @@ function SpecTable({
                       <th
                         className={cn(
                           CELL,
-                          "w-[54%] text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
+                          "w-[54%] text-center font-bold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
                           bg,
                         )}
                       >
@@ -303,7 +303,7 @@ function SpecRow({
       <th
         className={cn(
           CELL,
-          "w-[54%] whitespace-nowrap text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
+          "w-[54%] whitespace-nowrap text-center font-bold uppercase tracking-[0.01em] text-sheet-text",
           bgClass,
           emphasis ? "text-[2.3mm] tracking-[0.04em]" : "text-[2mm]",
         )}
