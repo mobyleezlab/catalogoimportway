@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import type { SheetBarcode, SheetProduct, SheetRow, SheetVariant } from "@/data/sheet-products";
 import { cn } from "@/lib/utils";
 
