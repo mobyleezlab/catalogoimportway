@@ -124,7 +124,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
   );
 }
 
-/** Título em Futura LT Bold 10pt, reduzido só o necessário para nunca cortar/quebrar. */
+/** Título em Futura PT Bold 10pt, reduzido só o necessário para nunca cortar/quebrar. */
 function SheetTitle({ title }: { title: string }) {
   const ref = useRef<HTMLHeadingElement>(null);
   const [size, setSize] = useState(10);
