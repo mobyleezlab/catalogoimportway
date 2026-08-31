@@ -14,6 +14,15 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
     variantRows.push(product.variants.slice(i, i + 4));
   }
 
+  // Alturas compartilhadas: linha a linha, NCM alinha com QUANTIDADE, etc.
+  const barcodeCount = product.barcodes?.length ?? 0;
+  const barcodeHeight = Math.max(3.3, barcodeCount * 2.1 + 1.2);
+  const rowCount = 1 + Math.max(product.product.length, product.master.length - 1);
+  const rowHeights = Array.from({ length: rowCount + 1 }, (_, index) =>
+    index === 1 && barcodeCount ? `${barcodeHeight}mm` : "3.3mm",
+  );
+
+
 
   return (
     <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page pt-[1.2mm]">
@@ -59,15 +68,17 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
 
         {/* Faixa inferior: tabelas técnicas + imagem + selo Inmetro */}
         <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_74mm] gap-x-[2.5mm]">
-          <div className="grid min-h-0 grid-cols-2 items-end gap-x-[2.5mm]">
+          <div className="grid min-h-0 grid-cols-2 items-start gap-x-[2.5mm]">
             <SpecTable
               headingLabel="NCM"
               headingValue={product.ncm}
               barcodes={product.barcodes}
               rows={product.product}
+              rowHeights={rowHeights}
             />
-            <SpecTable heading="Master" rows={product.master} />
+            <SpecTable heading="Master" rows={product.master} rowHeights={rowHeights} />
           </div>
+
 
           <div className="relative min-h-0">
             <div className="h-full w-full">
@@ -130,13 +141,18 @@ function SpecTable({
   headingLabel,
   headingValue,
   barcodes,
+  rowHeights = [],
 }: {
   rows: SheetRow[];
   heading?: string;
   headingLabel?: string;
   headingValue?: string;
   barcodes?: SheetBarcode[];
+  rowHeights?: string[];
 }) {
+  let rowIndex = 0;
+  const nextHeight = () => rowHeights[rowIndex++];
+
   return (
     <div>
       <div
@@ -154,10 +170,14 @@ function SpecTable({
         <table className="w-full table-fixed border-collapse text-[2.1mm]">
           <tbody>
             {headingLabel ? (
-              <SpecRow row={{ label: headingLabel, value: headingValue ?? "" }} emphasis />
+              <SpecRow
+                row={{ label: headingLabel, value: headingValue ?? "" }}
+                emphasis
+                height={nextHeight()}
+              />
             ) : null}
             {barcodes?.length ? (
-              <tr>
+              <tr style={{ height: nextHeight() }}>
                 <th className={cn(CELL, "w-1/2 bg-sheet-label text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text")}>
                   Código
                   <br />
@@ -184,7 +204,7 @@ function SpecTable({
               </tr>
             ) : null}
             {rows.map((row) => (
-              <SpecRow key={row.label} row={row} />
+              <SpecRow key={row.label} row={row} height={nextHeight()} />
             ))}
           </tbody>
         </table>
@@ -193,9 +213,19 @@ function SpecTable({
   );
 }
 
-function SpecRow({ row, emphasis }: { row: SheetRow; emphasis?: boolean }) {
+
+function SpecRow({
+  row,
+  emphasis,
+  height,
+}: {
+  row: SheetRow;
+  emphasis?: boolean;
+  height?: string | undefined;
+}) {
   return (
-    <tr>
+    <tr style={{ height }}>
+
       <th
         className={cn(
           CELL,
