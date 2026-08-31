@@ -94,8 +94,12 @@ export const sheetProducts: SheetProduct[] = [
       "Produto certificado pelo Inmetro",
     ],
     variants: [
-      { sku: "BW112VM", color: "Vermelho", tone: "light" },
+      { sku: "BW112BR", color: "Branco", tone: "light" },
+      { sku: "BW112PR", color: "Preto", tone: "accent" },
       { sku: "BW112AZ", color: "Azul", tone: "accent" },
+      { sku: "BW112VM", color: "Vermelho", tone: "light" },
+      { sku: "BW112RS", color: "Rosa", tone: "accent" },
+      { sku: "BW112VD", color: "Verde", tone: "light" },
     ],
     barcodes: [
       { code: "7908449961124", tone: "accent" },
