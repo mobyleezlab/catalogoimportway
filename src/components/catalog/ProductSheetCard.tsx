@@ -128,7 +128,7 @@ function SpecTable({
   return (
     <div>
       {heading ? (
-        <div className="mx-auto w-[68%] rounded-t-[2mm] bg-sheet-master px-[1.4mm] py-[0.5mm] text-center">
+        <div className="w-1/2 rounded-t-[2mm] bg-sheet-master px-[1.4mm] py-[0.5mm] text-center">
           <span className="text-[2.3mm] font-extrabold uppercase tracking-[0.04em] text-sheet-navy-foreground">
             {heading}
           </span>
