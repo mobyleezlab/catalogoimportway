@@ -14,9 +14,9 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
         </h2>
       </header>
 
-      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_62mm] gap-x-[2mm] px-[4mm] pb-[2mm] pt-[1.6mm]">
+      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_62mm] gap-x-[2mm] px-[4mm] pb-[2mm] pt-[1.3mm]">
         {/* Coluna esquerda: marcadores + tabelas técnicas */}
-        <div className="flex min-w-0 flex-col gap-[1.8mm]">
+        <div className="flex min-w-0 flex-col gap-[1.4mm]">
           <div className="grid grid-cols-2 gap-x-[3mm]">
             {columns.map((column, index) => (
               <ul key={index} className="space-y-[0.4mm]">
@@ -112,7 +112,7 @@ function SpecTable({
           <tr>
             <th
               colSpan={2}
-              className="bg-sheet-master px-[1.5mm] py-[1mm] text-center text-[2.5mm] font-extrabold uppercase tracking-[0.04em] text-sheet-navy-foreground"
+              className="bg-sheet-master px-[1.5mm] py-[0.75mm] text-center text-[2.5mm] font-extrabold uppercase tracking-[0.04em] text-sheet-navy-foreground"
             >
               {heading}
             </th>
@@ -125,12 +125,12 @@ function SpecTable({
         ))}
         {barcodes?.length ? (
           <tr>
-            <th className="bg-sheet-label px-[1.5mm] py-[1mm] text-center text-[2.3mm] font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-navy">
+            <th className="bg-sheet-label px-[1.5mm] py-[0.75mm] text-center text-[2.3mm] font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-navy">
               Código
               <br />
               de barras
             </th>
-            <td className="bg-sheet-value px-[1.5mm] py-[1mm] text-muted-foreground">
+            <td className="bg-sheet-value px-[1.5mm] py-[0.75mm] text-muted-foreground">
               <ul className="space-y-[0.3mm]">
                 {barcodes.map((barcode) => (
                   <li key={barcode.code} className="flex items-center gap-[1.2mm]">
@@ -159,11 +159,11 @@ function SpecTable({
 function SpecRow({ row }: { row: SheetRow }) {
   return (
     <tr>
-      <th className="w-1/2 bg-sheet-label px-[1.5mm] py-[1mm] text-center text-[2.3mm] font-extrabold uppercase tracking-[0.02em] text-sheet-navy">
+      <th className="w-1/2 bg-sheet-label px-[1.5mm] py-[0.75mm] text-center text-[2.3mm] font-extrabold uppercase tracking-[0.02em] text-sheet-navy">
         {row.label}
         {row.unit ? <span className="text-[1.9mm] font-medium"> {row.unit}</span> : null}
       </th>
-      <td className="bg-sheet-value px-[1.5mm] py-[1mm] text-center text-[2.3mm] text-muted-foreground">
+      <td className="bg-sheet-value px-[1.5mm] py-[0.75mm] text-center text-[2.3mm] text-muted-foreground">
         {row.value}
       </td>
     </tr>
