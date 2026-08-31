@@ -39,22 +39,25 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
       </header>
 
       <div className="flex min-h-0 flex-1 flex-col gap-[1.2mm] px-[4mm] pb-[1.6mm] pt-[1.3mm]">
-        {/* Faixa superior: marcadores à esquerda, etiquetas de SKU/cor à direita */}
-        <div className="flex items-start gap-x-[3mm]">
-          <div className="grid min-w-0 flex-1 grid-cols-2 gap-x-[3mm]">
-            {columns.map((column, index) => (
-              <ul key={index} className="space-y-[0.4mm]">
-                {column.map((bullet) => (
-                  <li
-                    key={bullet}
-                    className="flex gap-[1mm] text-[2.1mm] leading-[1.3] text-sheet-text"
-                  >
-                    <span aria-hidden="true">•</span>
-                    <span className="min-w-0">{bullet}</span>
-                  </li>
-                ))}
-              </ul>
-            ))}
+        {/* Faixa superior: marcadores alinhados à esquerda da tabela MASTER, etiquetas de SKU/cor à direita */}
+        <div className="grid grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm]">
+          <div className="grid grid-cols-2 gap-x-[2.5mm]">
+            <div />
+            <div className="grid min-w-0 grid-cols-2 gap-x-[3mm]">
+              {columns.map((column, index) => (
+                <ul key={index} className="space-y-[0.4mm]">
+                  {column.map((bullet) => (
+                    <li
+                      key={bullet}
+                      className="flex gap-[1mm] text-[2.1mm] leading-[1.3] text-sheet-text"
+                    >
+                      <span aria-hidden="true">•</span>
+                      <span className="min-w-0">{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </div>
           </div>
 
           {/* Etiquetas de SKU/cor: máx. 4 por linha; sobras alinhadas à direita */}
