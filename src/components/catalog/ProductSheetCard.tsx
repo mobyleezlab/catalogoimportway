@@ -9,6 +9,11 @@ const CELL =
 export function ProductSheetCard({ product }: { product: SheetProduct }) {
   const half = Math.ceil(product.bullets.length / 2);
   const columns = [product.bullets.slice(0, half), product.bullets.slice(half)];
+  const variantRows: SheetVariant[][] = [];
+  for (let i = 0; i < product.variants.length; i += 4) {
+    variantRows.push(product.variants.slice(i, i + 4));
+  }
+
 
   return (
     <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page pt-[1.2mm]">
@@ -37,23 +42,24 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
             ))}
           </div>
 
-          {/* Etiquetas de SKU/cor: no máximo 4 por linha, quebrando abaixo */}
-          <div
-            className="grid shrink-0 justify-end gap-[1mm]"
-            style={{
-              gridTemplateColumns: `repeat(${Math.min(product.variants.length, 4)}, minmax(0, 1fr))`,
-            }}
-          >
-            {product.variants.map((variant) => (
-              <VariantTag key={variant.sku} variant={variant} />
+          {/* Etiquetas de SKU/cor: máx. 4 por linha; sobras alinhadas à direita */}
+          <div className="flex shrink-0 flex-col items-end gap-[1mm]">
+            {variantRows.map((row, index) => (
+              <div key={index} className="flex justify-end gap-[1mm]">
+                {row.map((variant) => (
+                  <VariantTag key={variant.sku} variant={variant} />
+                ))}
+              </div>
             ))}
           </div>
+
+
 
         </div>
 
         {/* Faixa inferior: tabelas técnicas + imagem + selo Inmetro */}
         <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_74mm] gap-x-[2.5mm]">
-          <div className="grid min-h-0 grid-cols-2 items-start gap-x-[2.5mm]">
+          <div className="grid min-h-0 grid-cols-2 items-end gap-x-[2.5mm]">
             <SpecTable
               headingLabel="NCM"
               headingValue={product.ncm}
