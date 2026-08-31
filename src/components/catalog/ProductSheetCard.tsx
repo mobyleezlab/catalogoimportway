@@ -37,17 +37,20 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
             ))}
           </div>
 
-          {/* Etiquetas de SKU/cor: no máximo 4 por linha, quebrando abaixo */}
+          {/* Etiquetas de SKU/cor: máx. 4 por linha; sobras alinhadas à direita */}
           <div
-            className="grid shrink-0 justify-end gap-[1mm]"
+            className="grid shrink-0 justify-end gap-[1mm] [direction:rtl]"
             style={{
               gridTemplateColumns: `repeat(${Math.min(product.variants.length, 4)}, minmax(0, 1fr))`,
             }}
           >
             {product.variants.map((variant) => (
-              <VariantTag key={variant.sku} variant={variant} />
+              <div key={variant.sku} className="[direction:ltr]">
+                <VariantTag variant={variant} />
+              </div>
             ))}
           </div>
+
 
         </div>
 
