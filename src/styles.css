@@ -2,53 +2,48 @@
 @source "../src";
 @import "tw-animate-css";
 
-/*
- * Futura LT (apenas larguras normais).
- * O CSS público do CDN registra as variantes Condensed sob a MESMA família,
- * sobrescrevendo os pesos 500/700 pelas versões estreitas. Por isso as faces
- * são declaradas aqui manualmente, ignorando todos os arquivos Condensed.
- */
+/* Futura PT — faces declaradas manualmente (larguras normais). */
 @font-face {
-  font-family: "Futura LT";
+  font-family: "Futura PT";
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT-Light.woff") format("woff");
+  src: url("https://fonts.cdnfonts.com/s/72205/FuturaCyrillicLight.woff") format("woff");
 }
 @font-face {
-  font-family: "Futura LT";
+  font-family: "Futura PT";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT-Book.woff") format("woff");
+  src: url("https://fonts.cdnfonts.com/s/72205/FuturaCyrillicBook.woff") format("woff");
 }
 @font-face {
-  font-family: "Futura LT";
+  font-family: "Futura PT";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT.woff") format("woff");
+  src: url("https://fonts.cdnfonts.com/s/72205/FuturaCyrillicMedium.woff") format("woff");
 }
 @font-face {
-  font-family: "Futura LT";
+  font-family: "Futura PT";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("https://fonts.cdnfonts.com/s/72205/FuturaCyrillicDemi.woff") format("woff");
+}
+@font-face {
+  font-family: "Futura PT";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT-Bold.woff") format("woff");
+  src: url("https://fonts.cdnfonts.com/s/72205/FuturaCyrillicBold.woff") format("woff");
 }
 @font-face {
-  font-family: "Futura LT";
+  font-family: "Futura PT";
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT-ExtraBold.woff") format("woff");
-}
-@font-face {
-  font-family: "Futura LT";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("https://fonts.cdnfonts.com/s/18576/FuturaLT-BookOblique.woff") format("woff");
+  src: url("https://fonts.cdnfonts.com/s/72205/FuturaCyrillicExtraBold.woff") format("woff");
 }
 
 @custom-variant dark (&:is(.dark *));
