@@ -59,7 +59,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
 
         {/* Faixa inferior: tabelas técnicas + imagem + selo Inmetro */}
         <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_74mm] gap-x-[2.5mm]">
-          <div className="grid min-h-0 grid-cols-2 items-start gap-x-[2.5mm]">
+          <div className="grid min-h-0 grid-cols-2 items-end gap-x-[2.5mm]">
             <SpecTable
               headingLabel="NCM"
               headingValue={product.ncm}
