@@ -14,6 +14,15 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
     variantRows.push(product.variants.slice(i, i + 4));
   }
 
+  // Alturas compartilhadas: linha a linha, NCM alinha com QUANTIDADE, etc.
+  const barcodeCount = product.barcodes?.length ?? 0;
+  const barcodeHeight = Math.max(3.3, barcodeCount * 2.1 + 1.2);
+  const rowCount = 1 + Math.max(product.product.length, product.master.length - 1);
+  const rowHeights = Array.from({ length: rowCount + 1 }, (_, index) =>
+    index === 1 && barcodeCount ? `${barcodeHeight}mm` : "3.3mm",
+  );
+
+
 
   return (
     <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page pt-[1.2mm]">
