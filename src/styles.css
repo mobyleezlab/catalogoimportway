@@ -65,7 +65,7 @@
 @theme inline {
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-sheet: "Futura LT", "Futura", "Trebuchet MS", sans-serif;
+  --font-sheet: "Futura PT", "Futura", "Trebuchet MS", sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
