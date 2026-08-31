@@ -184,7 +184,7 @@ function SpecTable({
     <div>
       <div
         className={cn(
-          "flex h-[2.6mm] w-1/2 items-center justify-center rounded-t-[2mm] px-[1.4mm]",
+          "flex h-[2.6mm] w-[58%] items-center justify-center rounded-t-[2mm] px-[1.4mm]",
           heading ? "bg-sheet-master" : "invisible",
         )}
       >
@@ -217,7 +217,7 @@ function SpecTable({
                       <th
                         className={cn(
                           CELL,
-                          "w-1/2 text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
+                          "w-[58%] text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
                           bg,
                         )}
                       >
@@ -277,7 +277,7 @@ function SpecRow({
       <th
         className={cn(
           CELL,
-          "w-1/2 whitespace-nowrap text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
+          "w-[58%] whitespace-nowrap text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
           bgClass,
           emphasis ? "text-[2.3mm] tracking-[0.04em]" : "text-[2mm]",
         )}
