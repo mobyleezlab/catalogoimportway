@@ -225,7 +225,7 @@ function SpecTable({
                         <br />
                         de barras
                       </th>
-                      <td className={cn(CELL, "text-sheet-text", bg)}>
+                      <td className={cn(CELL, "text-[1.8mm] text-sheet-text", bg)}>
                         <ul className="space-y-[0.3mm]">
                           {barcodes.map((barcode) => (
                             <li
