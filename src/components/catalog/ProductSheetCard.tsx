@@ -203,9 +203,18 @@ function SpecTable({
 }
 
 
-function SpecRow({ row, emphasis }: { row: SheetRow; emphasis?: boolean }) {
+function SpecRow({
+  row,
+  emphasis,
+  height,
+}: {
+  row: SheetRow;
+  emphasis?: boolean;
+  height?: string;
+}) {
   return (
-    <tr>
+    <tr style={{ height }}>
+
       <th
         className={cn(
           CELL,
