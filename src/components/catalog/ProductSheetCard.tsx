@@ -124,6 +124,34 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
   );
 }
 
+/** Título em Futura LT Bold 10pt, reduzido só o necessário para nunca cortar/quebrar. */
+function SheetTitle({ title }: { title: string }) {
+  const ref = useRef<HTMLHeadingElement>(null);
+  const [size, setSize] = useState(10);
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let current = 10;
+    el.style.fontSize = `${current}pt`;
+    while (el.scrollWidth > el.clientWidth && current > 5) {
+      current -= 0.25;
+      el.style.fontSize = `${current}pt`;
+    }
+    setSize(current);
+  }, [title]);
+
+  return (
+    <h2
+      ref={ref}
+      style={{ fontSize: `${size}pt` }}
+      className="w-full overflow-hidden whitespace-nowrap font-sheet font-bold uppercase leading-none tracking-[-0.01em] text-sheet-navy-foreground"
+    >
+      {title}
+    </h2>
+  );
+}
+
 function VariantTag({ variant }: { variant: SheetVariant }) {
   const accent = variant.tone === "accent";
   return (
