@@ -163,7 +163,7 @@ function SpecTable({
   barcodes?: SheetBarcode[];
   rowHeights?: string[];
   rowColors?: string[];
-  flexRowIndex?: number;
+  flexRowIndex?: number | undefined;
 }) {
   let rowIndex = 0;
   const nextRow = () => {
@@ -195,55 +195,64 @@ function SpecTable({
       <div className="overflow-hidden rounded-[2mm]">
         <table className="w-full table-fixed border-collapse text-[2.1mm]">
           <tbody>
-            {headingLabel ? (
-              <SpecRow
-                row={{ label: headingLabel, value: headingValue ?? "" }}
-                emphasis
-                bgClass={nextBg()}
-                height={nextHeight()}
-              />
-            ) : null}
-            {barcodes?.length ? (
-              <tr style={{ height: nextHeight() }}>
-                <th
-                  className={cn(
-                    CELL,
-                    "w-1/2 text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
-                    nextBg(),
-                  )}
-                >
-                  Código
-                  <br />
-                  de barras
-                </th>
-                <td className={cn(CELL, "text-sheet-text", nextBg())}>
-                  <ul className="space-y-[0.3mm]">
-                    {barcodes.map((barcode) => (
-                      <li key={barcode.code} className="flex items-center gap-[1.2mm]">
-                        <span
-                          aria-hidden="true"
-                          className={cn(
-                            "h-[1.5mm] w-[1.5mm] shrink-0 rounded-full",
-                            barcode.tone === "accent"
-                              ? "bg-sheet-navy"
-                              : "border-[0.25mm] border-sheet-edge bg-card",
-                          )}
-                        />
-                        {barcode.code}
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-              </tr>
-            ) : null}
-            {rows.map((row) => (
-              <SpecRow
-                key={row.label}
-                row={row}
-                bgClass={nextBg()}
-                height={nextHeight()}
-              />
-            ))}
+            {headingLabel
+              ? (() => {
+                  const { bg, style } = nextRow();
+                  return (
+                    <SpecRow
+                      row={{ label: headingLabel, value: headingValue ?? "" }}
+                      emphasis
+                      bgClass={bg}
+                      style={style}
+                    />
+                  );
+                })()
+              : null}
+            {barcodes?.length
+              ? (() => {
+                  const { bg, style } = nextRow();
+                  return (
+                    <tr style={style}>
+                      <th
+                        className={cn(
+                          CELL,
+                          "w-1/2 text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
+                          bg,
+                        )}
+                      >
+                        Código
+                        <br />
+                        de barras
+                      </th>
+                      <td className={cn(CELL, "text-sheet-text", bg)}>
+                        <ul className="space-y-[0.3mm]">
+                          {barcodes.map((barcode) => (
+                            <li
+                              key={barcode.code}
+                              className="flex items-center gap-[1.2mm] whitespace-nowrap"
+                            >
+                              <span
+                                aria-hidden="true"
+                                className={cn(
+                                  "h-[1.5mm] w-[1.5mm] shrink-0 rounded-full",
+                                  barcode.tone === "accent"
+                                    ? "bg-sheet-navy"
+                                    : "border-[0.25mm] border-sheet-edge bg-card",
+                                )}
+                              />
+                              {barcode.code}
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                    </tr>
+                  );
+                })()
+              : null}
+            {rows.map((row) => {
+              const { bg, style } = nextRow();
+              return <SpecRow key={row.label} row={row} bgClass={bg} style={style} />;
+            })}
           </tbody>
         </table>
       </div>
