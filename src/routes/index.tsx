@@ -26,7 +26,7 @@ function CatalogSheetPage() {
   return (
     <div className="min-h-screen overflow-auto bg-muted p-[6mm] print:bg-card print:p-0">
       <h1 className="sr-only">Catálogo Importway — página de fichas técnicas</h1>
-      <div className="mx-auto flex h-[307mm] w-[220mm] flex-col items-center justify-between bg-card px-[21.5mm] py-[10mm] shadow-sm print:shadow-none">
+      <div className="mx-auto flex h-[307mm] w-[220mm] flex-col items-center justify-center gap-[5.6mm] bg-card px-[21.5mm] py-[10mm] shadow-sm print:shadow-none">
         {sheetProducts.map((product) => (
           <ProductSheetCard key={product.id} product={product} />
         ))}

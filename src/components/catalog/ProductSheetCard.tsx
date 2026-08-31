@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import type { SheetBarcode, SheetProduct, SheetRow, SheetVariant } from "@/data/sheet-products";
 import { cn } from "@/lib/utils";
 
@@ -35,9 +35,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
   return (
     <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page pt-[1.2mm] font-sheet">
       <header className="mt-[13px] bg-sheet-navy px-[4mm] py-[1.6mm]">
-        <h2 className="text-[5mm] font-extrabold uppercase leading-none tracking-[-0.01em] text-sheet-navy-foreground">
-          {product.title}
-        </h2>
+        <SheetTitle title={product.title} />
       </header>
 
       <div className="flex min-h-0 flex-1 flex-col gap-[1.2mm] px-[4mm] pb-[1.6mm] pt-[1.3mm]">
@@ -123,6 +121,34 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
         </div>
       </div>
     </article>
+  );
+}
+
+/** Título em Futura LT Bold 10pt, reduzido só o necessário para nunca cortar/quebrar. */
+function SheetTitle({ title }: { title: string }) {
+  const ref = useRef<HTMLHeadingElement>(null);
+  const [size, setSize] = useState(10);
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let current = 10;
+    el.style.fontSize = `${current}pt`;
+    while (el.scrollWidth > el.clientWidth && current > 5) {
+      current -= 0.25;
+      el.style.fontSize = `${current}pt`;
+    }
+    setSize(current);
+  }, [title]);
+
+  return (
+    <h2
+      ref={ref}
+      style={{ fontSize: `${size}pt` }}
+      className="w-full overflow-hidden whitespace-nowrap font-sheet font-bold uppercase leading-none tracking-[-0.01em] text-sheet-navy-foreground"
+    >
+      {title}
+    </h2>
   );
 }
 
