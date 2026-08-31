@@ -37,12 +37,18 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
             ))}
           </div>
 
-          {/* Etiquetas de SKU/cor: 1 a 6 variantes em uma única linha; acima disso quebra */}
-          <div className="flex shrink-0 flex-wrap justify-end gap-[1mm]">
+          {/* Etiquetas de SKU/cor: no máximo 4 por linha, quebrando abaixo */}
+          <div
+            className="grid shrink-0 justify-end gap-[1mm]"
+            style={{
+              gridTemplateColumns: `repeat(${Math.min(product.variants.length, 4)}, minmax(0, 1fr))`,
+            }}
+          >
             {product.variants.map((variant) => (
               <VariantTag key={variant.sku} variant={variant} />
             ))}
           </div>
+
         </div>
 
         {/* Faixa inferior: tabelas técnicas + imagem + selo Inmetro */}
@@ -127,13 +133,17 @@ function SpecTable({
 }) {
   return (
     <div>
-      {heading ? (
-        <div className="w-1/2 rounded-t-[2mm] bg-sheet-master px-[1.4mm] py-[0.5mm] text-center">
-          <span className="text-[2.3mm] font-extrabold uppercase tracking-[0.04em] text-sheet-navy-foreground">
-            {heading}
-          </span>
-        </div>
-      ) : null}
+      <div
+        className={cn(
+          "flex h-[3.2mm] w-1/2 items-center justify-center rounded-t-[2mm] px-[1.4mm]",
+          heading ? "bg-sheet-master" : "invisible",
+        )}
+      >
+        <span className="text-[2.3mm] font-extrabold uppercase leading-none tracking-[0.04em] text-sheet-navy-foreground">
+          {heading ?? "."}
+        </span>
+      </div>
+
       <div className="overflow-hidden rounded-[2mm] bg-sheet-value">
         <table className="w-full table-fixed border-collapse text-[2.1mm]">
           <tbody>
