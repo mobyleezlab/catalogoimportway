@@ -130,13 +130,18 @@ function SpecTable({
   headingLabel,
   headingValue,
   barcodes,
+  rowHeights = [],
 }: {
   rows: SheetRow[];
   heading?: string;
   headingLabel?: string;
   headingValue?: string;
   barcodes?: SheetBarcode[];
+  rowHeights?: string[];
 }) {
+  let rowIndex = 0;
+  const nextHeight = () => rowHeights[rowIndex++];
+
   return (
     <div>
       <div
@@ -154,10 +159,14 @@ function SpecTable({
         <table className="w-full table-fixed border-collapse text-[2.1mm]">
           <tbody>
             {headingLabel ? (
-              <SpecRow row={{ label: headingLabel, value: headingValue ?? "" }} emphasis />
+              <SpecRow
+                row={{ label: headingLabel, value: headingValue ?? "" }}
+                emphasis
+                height={nextHeight()}
+              />
             ) : null}
             {barcodes?.length ? (
-              <tr>
+              <tr style={{ height: nextHeight() }}>
                 <th className={cn(CELL, "w-1/2 bg-sheet-label text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text")}>
                   Código
                   <br />
@@ -184,7 +193,7 @@ function SpecTable({
               </tr>
             ) : null}
             {rows.map((row) => (
-              <SpecRow key={row.label} row={row} />
+              <SpecRow key={row.label} row={row} height={nextHeight()} />
             ))}
           </tbody>
         </table>
@@ -192,6 +201,7 @@ function SpecTable({
     </div>
   );
 }
+
 
 function SpecRow({ row, emphasis }: { row: SheetRow; emphasis?: boolean }) {
   return (
