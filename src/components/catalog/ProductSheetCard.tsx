@@ -150,7 +150,7 @@ function SpecTable({
   let rowIndex = 0;
   let lineIndex = 0;
   const nextHeight = () => rowHeights[rowIndex++];
-  const nextBg = () => ROW_COLORS[lineIndex++ % ROW_COLORS.length];
+  const nextBg = () => ROW_COLORS[(lineIndex++) % ROW_COLORS.length] as string;
 
   return (
     <div>
