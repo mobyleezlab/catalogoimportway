@@ -1,9 +1,10 @@
+import type { CSSProperties } from "react";
 import type { SheetBarcode, SheetProduct, SheetRow, SheetVariant } from "@/data/sheet-products";
 import { cn } from "@/lib/utils";
 
 /** Altura fixa das células para que NCM e MASTER fiquem na mesma direção. */
 const CELL =
-  "h-[3.6mm] border-b-[0.25mm] border-sheet-page px-[1.4mm] py-[0.5mm] align-middle last:border-b-0";
+  "h-[3.6mm] border-b-[0.25mm] border-sheet-page px-[1mm] py-[0.5mm] align-middle last:border-b-0";
 
 /** Cores alternadas das linhas das tabelas. */
 const ROW_COLORS = ["bg-[#f2f1ef]", "bg-[#e6e6e4]"];
@@ -17,13 +18,19 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
     variantRows.push(product.variants.slice(i, i + 4));
   }
 
-  // Alturas compartilhadas: linha a linha, NCM alinha com QUANTIDADE, etc.
+  // Alturas e cores compartilhadas: linha a linha, NCM alinha com QUANTIDADE,
+  // CÓDIGO DE BARRAS alinha com PESO (KG), e assim por diante.
   const barcodeCount = product.barcodes?.length ?? 0;
-  const barcodeHeight = Math.max(3.6, barcodeCount * 2.2 + 1.4);
+  const barcodeHeight = Math.max(3.6, barcodeCount * 2.6 + 1.6);
   const rowCount = 1 + Math.max(product.product.length, product.master.length - 1);
   const rowHeights = Array.from({ length: rowCount + 1 }, (_, index) =>
     index === 1 && barcodeCount ? `${barcodeHeight}mm` : "3.6mm",
   );
+  const rowColors = Array.from(
+    { length: rowCount + 1 },
+    (_, index) => ROW_COLORS[index % ROW_COLORS.length] as string,
+  );
+  const flexRowIndex = barcodeCount ? 1 : undefined;
 
   return (
     <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page pt-[1.2mm]">
@@ -65,7 +72,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
         </div>
 
         {/* Faixa inferior: tabelas técnicas + imagem + selo Inmetro */}
-        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_84mm] gap-x-[2.5mm] pt-[1.5mm]">
+        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm] pt-[1.5mm]">
           <div className="grid min-h-0 grid-cols-2 items-start gap-x-[2.5mm]">
             <SpecTable
               headingLabel="NCM"
@@ -73,8 +80,16 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
               barcodes={product.barcodes}
               rows={product.product}
               rowHeights={rowHeights}
+              rowColors={rowColors}
+              flexRowIndex={flexRowIndex}
             />
-            <SpecTable heading="Master" rows={product.master} rowHeights={rowHeights} />
+            <SpecTable
+              heading="Master"
+              rows={product.master}
+              rowHeights={rowHeights}
+              rowColors={rowColors}
+              flexRowIndex={flexRowIndex}
+            />
           </div>
 
           <div className="relative min-h-0">
@@ -139,6 +154,8 @@ function SpecTable({
   headingValue,
   barcodes,
   rowHeights = [],
+  rowColors = [],
+  flexRowIndex,
 }: {
   rows: SheetRow[];
   heading?: string;
@@ -146,17 +163,28 @@ function SpecTable({
   headingValue?: string;
   barcodes?: SheetBarcode[];
   rowHeights?: string[];
+  rowColors?: string[];
+  flexRowIndex?: number | undefined;
 }) {
   let rowIndex = 0;
-  let lineIndex = 0;
-  const nextHeight = () => rowHeights[rowIndex++];
-  const nextBg = () => ROW_COLORS[(lineIndex++) % ROW_COLORS.length] as string;
+  const nextRow = () => {
+    const index = rowIndex++;
+    const height = rowHeights[index];
+    return {
+      bg: (rowColors[index] ?? ROW_COLORS[0]) as string,
+      style: height
+        ? index === flexRowIndex
+          ? { minHeight: height }
+          : { height }
+        : undefined,
+    };
+  };
 
   return (
     <div>
       <div
         className={cn(
-          "flex h-[2.6mm] w-1/2 items-center justify-center rounded-t-[2mm] px-[1.4mm]",
+          "flex h-[2.6mm] w-[54%] items-center justify-center rounded-t-[2mm] px-[1.4mm]",
           heading ? "bg-sheet-master" : "invisible",
         )}
       >
@@ -168,55 +196,64 @@ function SpecTable({
       <div className="overflow-hidden rounded-[2mm]">
         <table className="w-full table-fixed border-collapse text-[2.1mm]">
           <tbody>
-            {headingLabel ? (
-              <SpecRow
-                row={{ label: headingLabel, value: headingValue ?? "" }}
-                emphasis
-                bgClass={nextBg()}
-                height={nextHeight()}
-              />
-            ) : null}
-            {barcodes?.length ? (
-              <tr style={{ height: nextHeight() }}>
-                <th
-                  className={cn(
-                    CELL,
-                    "w-1/2 text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
-                    nextBg(),
-                  )}
-                >
-                  Código
-                  <br />
-                  de barras
-                </th>
-                <td className={cn(CELL, "text-sheet-text", nextBg())}>
-                  <ul className="space-y-[0.3mm]">
-                    {barcodes.map((barcode) => (
-                      <li key={barcode.code} className="flex items-center gap-[1.2mm]">
-                        <span
-                          aria-hidden="true"
-                          className={cn(
-                            "h-[1.5mm] w-[1.5mm] shrink-0 rounded-full",
-                            barcode.tone === "accent"
-                              ? "bg-sheet-navy"
-                              : "border-[0.25mm] border-sheet-edge bg-card",
-                          )}
-                        />
-                        {barcode.code}
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-              </tr>
-            ) : null}
-            {rows.map((row) => (
-              <SpecRow
-                key={row.label}
-                row={row}
-                bgClass={nextBg()}
-                height={nextHeight()}
-              />
-            ))}
+            {headingLabel
+              ? (() => {
+                  const { bg, style } = nextRow();
+                  return (
+                    <SpecRow
+                      row={{ label: headingLabel, value: headingValue ?? "" }}
+                      emphasis
+                      bgClass={bg}
+                      style={style}
+                    />
+                  );
+                })()
+              : null}
+            {barcodes?.length
+              ? (() => {
+                  const { bg, style } = nextRow();
+                  return (
+                    <tr style={style}>
+                      <th
+                        className={cn(
+                          CELL,
+                          "w-[54%] text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
+                          bg,
+                        )}
+                      >
+                        Código
+                        <br />
+                        de barras
+                      </th>
+                      <td className={cn(CELL, "text-[1.8mm] text-sheet-text", bg)}>
+                        <ul className="space-y-[0.3mm]">
+                          {barcodes.map((barcode) => (
+                            <li
+                              key={barcode.code}
+                              className="flex items-center gap-[1.2mm] whitespace-nowrap"
+                            >
+                              <span
+                                aria-hidden="true"
+                                className={cn(
+                                  "h-[1.5mm] w-[1.5mm] shrink-0 rounded-full",
+                                  barcode.tone === "accent"
+                                    ? "bg-sheet-navy"
+                                    : "border-[0.25mm] border-sheet-edge bg-card",
+                                )}
+                              />
+                              {barcode.code}
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                    </tr>
+                  );
+                })()
+              : null}
+            {rows.map((row) => {
+              const { bg, style } = nextRow();
+              return <SpecRow key={row.label} row={row} bgClass={bg} style={style} />;
+            })}
           </tbody>
         </table>
       </div>
@@ -228,19 +265,19 @@ function SpecRow({
   row,
   emphasis,
   bgClass,
-  height,
+  style,
 }: {
   row: SheetRow;
   emphasis?: boolean;
   bgClass: string;
-  height?: string | undefined;
+  style?: CSSProperties | undefined;
 }) {
   return (
-    <tr style={{ height }}>
+    <tr style={style}>
       <th
         className={cn(
           CELL,
-          "w-1/2 whitespace-nowrap text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
+          "w-[54%] whitespace-nowrap text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
           bgClass,
           emphasis ? "text-[2.3mm] tracking-[0.04em]" : "text-[2mm]",
         )}
