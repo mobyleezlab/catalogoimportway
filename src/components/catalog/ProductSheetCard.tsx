@@ -2,7 +2,8 @@ import type { SheetBarcode, SheetProduct, SheetRow, SheetVariant } from "@/data/
 import { cn } from "@/lib/utils";
 
 /** Altura fixa das células para que NCM e MASTER fiquem na mesma direção. */
-const CELL = "h-[3.3mm] rounded-[0.9mm] px-[1.4mm] py-0 align-middle";
+const CELL =
+  "h-[3.3mm] border-b-[0.25mm] border-sheet-page px-[1.4mm] py-[0.4mm] align-middle last:border-b-0";
 
 /** Ficha de produto no formato impresso de 177 x 65 mm. */
 export function ProductSheetCard({ product }: { product: SheetProduct }) {
@@ -125,86 +126,65 @@ function SpecTable({
   barcodes?: SheetBarcode[];
 }) {
   return (
-    <table className="w-full table-fixed border-separate border-spacing-[0.35mm] text-[2.1mm]">
-      <thead>
-        {heading ? (
-          <tr>
-            <th
-              colSpan={2}
-              className={cn(
-                CELL,
-                "bg-sheet-master text-center text-[2.3mm] font-extrabold uppercase tracking-[0.04em] text-sheet-navy-foreground",
-              )}
-            >
-              {heading}
-            </th>
-          </tr>
-        ) : (
-          <tr>
-            <th
-              className={cn(
-                CELL,
-                "w-1/2 bg-sheet-label text-center text-[2.3mm] font-extrabold uppercase tracking-[0.04em] text-sheet-navy",
-              )}
-            >
-              {headingLabel}
-            </th>
-            <td
-              className={cn(CELL, "bg-sheet-value text-center text-[2.1mm] text-sheet-text")}
-            >
-              {headingValue}
-            </td>
-          </tr>
-        )}
-      </thead>
-      <tbody>
-        {barcodes?.length ? (
-          <tr>
-            <th
-              className={cn(
-                CELL,
-                "h-auto bg-sheet-label py-[0.6mm] text-center text-[2.1mm] font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-navy",
-              )}
-            >
-              Código
-              <br />
-              de barras
-            </th>
-            <td className={cn(CELL, "h-auto bg-sheet-value py-[0.6mm] text-sheet-text")}>
-              <ul className="space-y-[0.3mm]">
-                {barcodes.map((barcode) => (
-                  <li key={barcode.code} className="flex items-center gap-[1.2mm]">
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        "h-[1.7mm] w-[1.7mm] shrink-0 rounded-full",
-                        barcode.tone === "accent"
-                          ? "bg-sheet-navy"
-                          : "border-[0.25mm] border-sheet-edge bg-card",
-                      )}
-                    />
-                    {barcode.code}
-                  </li>
-                ))}
-              </ul>
-            </td>
-          </tr>
-        ) : null}
-        {rows.map((row) => (
-          <SpecRow key={row.label} row={row} />
-        ))}
-      </tbody>
-    </table>
+    <div>
+      {heading ? (
+        <div className="mx-auto w-[68%] rounded-t-[2mm] bg-sheet-master px-[1.4mm] py-[0.5mm] text-center">
+          <span className="text-[2.3mm] font-extrabold uppercase tracking-[0.04em] text-sheet-navy-foreground">
+            {heading}
+          </span>
+        </div>
+      ) : null}
+      <div className="overflow-hidden rounded-[2mm] bg-sheet-value">
+        <table className="w-full table-fixed border-collapse text-[2.1mm]">
+          <tbody>
+            {headingLabel ? (
+              <SpecRow row={{ label: headingLabel, value: headingValue ?? "" }} emphasis />
+            ) : null}
+            {barcodes?.length ? (
+              <tr>
+                <th className={cn(CELL, "w-1/2 bg-sheet-label text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text")}>
+                  Código
+                  <br />
+                  de barras
+                </th>
+                <td className={cn(CELL, "bg-sheet-value text-sheet-text")}>
+                  <ul className="space-y-[0.3mm]">
+                    {barcodes.map((barcode) => (
+                      <li key={barcode.code} className="flex items-center gap-[1.2mm]">
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            "h-[1.5mm] w-[1.5mm] shrink-0 rounded-full",
+                            barcode.tone === "accent"
+                              ? "bg-sheet-navy"
+                              : "border-[0.25mm] border-sheet-edge bg-card",
+                          )}
+                        />
+                        {barcode.code}
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            ) : null}
+            {rows.map((row) => (
+              <SpecRow key={row.label} row={row} />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
-function SpecRow({ row }: { row: SheetRow }) {
+function SpecRow({ row, emphasis }: { row: SheetRow; emphasis?: boolean }) {
   return (
     <tr>
       <th
         className={cn(
           CELL,
-          "w-1/2 whitespace-nowrap bg-sheet-label text-center text-[2mm] font-extrabold uppercase tracking-[0.01em] text-sheet-navy",
+          "w-1/2 whitespace-nowrap bg-sheet-label text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
+          emphasis ? "text-[2.3mm] tracking-[0.04em]" : "text-[2mm]",
         )}
       >
         {row.label}
