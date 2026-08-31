@@ -5,6 +5,9 @@ import { cn } from "@/lib/utils";
 const CELL =
   "h-[3.3mm] border-b-[0.25mm] border-sheet-page px-[1.4mm] py-[0.4mm] align-middle last:border-b-0";
 
+/** Cores alternadas das linhas das tabelas. */
+const ROW_COLORS = ["bg-[#f2f1ef]", "bg-[#e6e6e4]"];
+
 /** Ficha de produto no formato impresso de 177 x 65 mm. */
 export function ProductSheetCard({ product }: { product: SheetProduct }) {
   const half = Math.ceil(product.bullets.length / 2);
@@ -21,8 +24,6 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
   const rowHeights = Array.from({ length: rowCount + 1 }, (_, index) =>
     index === 1 && barcodeCount ? `${barcodeHeight}mm` : "3.3mm",
   );
-
-
 
   return (
     <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page pt-[1.2mm]">
@@ -61,13 +62,10 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
               </div>
             ))}
           </div>
-
-
-
         </div>
 
         {/* Faixa inferior: tabelas técnicas + imagem + selo Inmetro */}
-        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_74mm] gap-x-[2.5mm]">
+        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_84mm] gap-x-[2.5mm] pt-[1.5mm]">
           <div className="grid min-h-0 grid-cols-2 items-start gap-x-[2.5mm]">
             <SpecTable
               headingLabel="NCM"
@@ -78,7 +76,6 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
             />
             <SpecTable heading="Master" rows={product.master} rowHeights={rowHeights} />
           </div>
-
 
           <div className="relative min-h-0">
             <div className="h-full w-full">
@@ -119,16 +116,16 @@ function VariantTag({ variant }: { variant: SheetVariant }) {
   return (
     <div
       className={cn(
-        "min-w-[16mm] rounded-[1.2mm] px-[1.4mm] py-[1.1mm] text-center leading-none",
+        "min-w-[13mm] rounded-[1mm] px-[1mm] py-[0.7mm] text-center leading-none",
         accent
           ? "bg-sheet-navy text-sheet-navy-foreground"
           : "border-[0.25mm] border-sheet-edge bg-card text-sheet-navy",
       )}
     >
-      <p className="whitespace-nowrap text-[2.5mm] font-extrabold tracking-[0.01em]">
+      <p className="whitespace-nowrap text-[2.1mm] font-extrabold tracking-[0.01em]">
         {variant.sku}
       </p>
-      <p className="mt-[0.7mm] whitespace-nowrap text-[1.9mm] font-medium uppercase tracking-[0.04em]">
+      <p className="mt-[0.4mm] whitespace-nowrap text-[1.7mm] font-medium uppercase tracking-[0.04em]">
         {variant.color}
       </p>
     </div>
@@ -157,33 +154,39 @@ function SpecTable({
     <div>
       <div
         className={cn(
-          "flex h-[3.2mm] w-1/2 items-center justify-center rounded-t-[2mm] px-[1.4mm]",
+          "flex h-[2.6mm] w-1/2 items-center justify-center rounded-t-[2mm] px-[1.4mm]",
           heading ? "bg-sheet-master" : "invisible",
         )}
       >
-        <span className="text-[2.3mm] font-extrabold uppercase leading-none tracking-[0.04em] text-sheet-navy-foreground">
+        <span className="text-[2mm] font-extrabold uppercase leading-none tracking-[0.04em] text-sheet-navy-foreground">
           {heading ?? "."}
         </span>
       </div>
 
-      <div className="overflow-hidden rounded-[2mm] bg-sheet-value">
+      <div className="overflow-hidden rounded-[2mm]">
         <table className="w-full table-fixed border-collapse text-[2.1mm]">
           <tbody>
             {headingLabel ? (
               <SpecRow
                 row={{ label: headingLabel, value: headingValue ?? "" }}
                 emphasis
+                index={0}
                 height={nextHeight()}
               />
             ) : null}
             {barcodes?.length ? (
               <tr style={{ height: nextHeight() }}>
-                <th className={cn(CELL, "w-1/2 bg-sheet-label text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text")}>
+                <th
+                  className={cn(
+                    CELL,
+                    "w-1/2 bg-[#e6e6e4] text-center font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-sheet-text",
+                  )}
+                >
                   Código
                   <br />
                   de barras
                 </th>
-                <td className={cn(CELL, "bg-sheet-value text-sheet-text")}>
+                <td className={cn(CELL, "bg-[#f2f1ef] text-sheet-text")}>
                   <ul className="space-y-[0.3mm]">
                     {barcodes.map((barcode) => (
                       <li key={barcode.code} className="flex items-center gap-[1.2mm]">
@@ -203,8 +206,13 @@ function SpecTable({
                 </td>
               </tr>
             ) : null}
-            {rows.map((row) => (
-              <SpecRow key={row.label} row={row} height={nextHeight()} />
+            {rows.map((row, index) => (
+              <SpecRow
+                key={row.label}
+                row={row}
+                index={index + (headingLabel ? 1 : 0) + (barcodes?.length ? 1 : 0)}
+                height={nextHeight()}
+              />
             ))}
           </tbody>
         </table>
@@ -213,30 +221,32 @@ function SpecTable({
   );
 }
 
-
 function SpecRow({
   row,
   emphasis,
+  index,
   height,
 }: {
   row: SheetRow;
   emphasis?: boolean;
+  index: number;
   height?: string | undefined;
 }) {
+  const bgClass = ROW_COLORS[index % ROW_COLORS.length];
   return (
     <tr style={{ height }}>
-
       <th
         className={cn(
           CELL,
-          "w-1/2 whitespace-nowrap bg-sheet-label text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
+          "w-1/2 whitespace-nowrap text-center font-extrabold uppercase tracking-[0.01em] text-sheet-text",
+          bgClass,
           emphasis ? "text-[2.3mm] tracking-[0.04em]" : "text-[2mm]",
         )}
       >
         {row.label}
         {row.unit ? <span className="text-[1.75mm] font-medium"> {row.unit}</span> : null}
       </th>
-      <td className={cn(CELL, "bg-sheet-value text-center text-[2.1mm] text-sheet-text")}>
+      <td className={cn(CELL, "text-center text-[2.1mm] text-sheet-text", bgClass)}>
         {row.value}
       </td>
     </tr>
