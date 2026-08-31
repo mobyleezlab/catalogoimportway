@@ -83,15 +83,16 @@
   --paper: oklch(0.985 0.004 95);
   --rule: oklch(0.9 0.006 95);
   --rule-strong: oklch(0.78 0.008 95);
-  --sheet-navy: oklch(0.32 0.09 265);
-  --sheet-navy-foreground: oklch(0.99 0 0);
-  --sheet-accent: oklch(0.52 0.19 5);
-  --sheet-accent-foreground: oklch(0.99 0 0);
-  --sheet-edge: oklch(0.86 0.03 250);
-  --sheet-label: oklch(0.94 0.015 250);
-  --sheet-value: oklch(0.975 0.006 250);
-  --sheet-master: oklch(0.52 0.02 255);
-  --sheet-photo: oklch(0.965 0.006 250);
+  --sheet-navy: oklch(0.335 0.117 273);
+  --sheet-navy-foreground: oklch(1 0 0);
+  --sheet-accent: oklch(0.335 0.117 273);
+  --sheet-accent-foreground: oklch(1 0 0);
+  --sheet-edge: oklch(0.86 0.004 95);
+  --sheet-label: oklch(0.905 0.002 95);
+  --sheet-value: oklch(0.949 0.002 95);
+  --sheet-master: oklch(0.55 0.004 95);
+  --sheet-photo: oklch(0.913 0.003 100);
+  --sheet-page: oklch(0.913 0.003 100);
 
   --background: oklch(0.985 0.004 95);
   --foreground: oklch(0.21 0.008 260);
