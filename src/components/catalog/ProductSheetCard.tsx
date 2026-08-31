@@ -17,13 +17,19 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
     variantRows.push(product.variants.slice(i, i + 4));
   }
 
-  // Alturas compartilhadas: linha a linha, NCM alinha com QUANTIDADE, etc.
+  // Alturas e cores compartilhadas: linha a linha, NCM alinha com QUANTIDADE,
+  // CÓDIGO DE BARRAS alinha com PESO (KG), e assim por diante.
   const barcodeCount = product.barcodes?.length ?? 0;
-  const barcodeHeight = Math.max(3.6, barcodeCount * 2.2 + 1.4);
+  const barcodeHeight = Math.max(3.6, barcodeCount * 2.6 + 1.6);
   const rowCount = 1 + Math.max(product.product.length, product.master.length - 1);
   const rowHeights = Array.from({ length: rowCount + 1 }, (_, index) =>
     index === 1 && barcodeCount ? `${barcodeHeight}mm` : "3.6mm",
   );
+  const rowColors = Array.from(
+    { length: rowCount + 1 },
+    (_, index) => ROW_COLORS[index % ROW_COLORS.length] as string,
+  );
+  const flexRowIndex = barcodeCount ? 1 : undefined;
 
   return (
     <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page pt-[1.2mm]">
@@ -73,8 +79,16 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
               barcodes={product.barcodes}
               rows={product.product}
               rowHeights={rowHeights}
+              rowColors={rowColors}
+              flexRowIndex={flexRowIndex}
             />
-            <SpecTable heading="Master" rows={product.master} rowHeights={rowHeights} />
+            <SpecTable
+              heading="Master"
+              rows={product.master}
+              rowHeights={rowHeights}
+              rowColors={rowColors}
+              flexRowIndex={flexRowIndex}
+            />
           </div>
 
           <div className="relative min-h-0">
