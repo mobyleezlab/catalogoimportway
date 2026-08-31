@@ -153,6 +153,8 @@ function SpecTable({
   headingValue,
   barcodes,
   rowHeights = [],
+  rowColors = [],
+  flexRowIndex,
 }: {
   rows: SheetRow[];
   heading?: string;
@@ -160,11 +162,22 @@ function SpecTable({
   headingValue?: string;
   barcodes?: SheetBarcode[];
   rowHeights?: string[];
+  rowColors?: string[];
+  flexRowIndex?: number;
 }) {
   let rowIndex = 0;
-  let lineIndex = 0;
-  const nextHeight = () => rowHeights[rowIndex++];
-  const nextBg = () => ROW_COLORS[(lineIndex++) % ROW_COLORS.length] as string;
+  const nextRow = () => {
+    const index = rowIndex++;
+    const height = rowHeights[index];
+    return {
+      bg: (rowColors[index] ?? ROW_COLORS[0]) as string,
+      style: height
+        ? index === flexRowIndex
+          ? { minHeight: height }
+          : { height }
+        : undefined,
+    };
+  };
 
   return (
     <div>
