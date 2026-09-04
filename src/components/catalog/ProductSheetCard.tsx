@@ -80,8 +80,8 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
           className="grid shrink-0 grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm]"
           style={{ minHeight: `${tablesHeight}mm` }}
         >
-
           <div className="grid min-h-0 grid-cols-2 items-start gap-x-[2.5mm]">
+
             <SpecTable
               headingLabel="NCM"
               headingValue={product.ncm}
