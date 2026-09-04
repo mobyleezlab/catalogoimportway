@@ -32,32 +32,35 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
   );
   const flexRowIndex = barcodeCount ? 1 : undefined;
 
+  // Orçamento vertical da faixa das tabelas: cabeçalho da aba + todas as linhas.
+  const tablesHeight = rowHeights.reduce(
+    (total, height) => total + Number.parseFloat(height),
+    2.6,
+  );
+
   return (
-    <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page pt-[1.2mm] font-sheet">
-      <header className="mt-[13px] bg-sheet-navy px-[4mm] py-[1.6mm]">
+    <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page font-sheet">
+      <header className="bg-sheet-navy px-[4mm] py-[1.8mm]">
         <SheetTitle title={product.title} />
       </header>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-[1.2mm] px-[4mm] pb-[1.6mm] pt-[1.3mm]">
-        {/* Faixa superior: marcadores alinhados à esquerda da tabela MASTER, etiquetas de SKU/cor à direita */}
-        <div className="grid grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm]">
-          <div className="grid grid-cols-2 gap-x-[2.5mm]">
-            <div />
-            <div className="grid min-w-0 grid-cols-2 gap-x-[3mm]">
-              {columns.map((column, index) => (
-                <ul key={index} className="space-y-[0.4mm]">
-                  {column.map((bullet) => (
-                    <li
-                      key={bullet}
-                      className="flex gap-[1mm] text-[2.1mm] leading-[1.3] text-sheet-text"
-                    >
-                      <span aria-hidden="true">•</span>
-                      <span className="min-w-0">{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-              ))}
-            </div>
+      <div className="flex min-h-0 flex-1 flex-col gap-[1.2mm] px-[4mm] pb-[1.8mm] pt-[1.3mm]">
+        {/* Faixa superior: marcadores em duas colunas na metade esquerda, etiquetas de SKU/cor à direita */}
+        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm]">
+          <div className="grid min-w-0 grid-cols-2 gap-x-[3mm]">
+            {columns.map((column, index) => (
+              <ul key={index} className="min-w-0 space-y-[0.2mm]">
+                {column.map((bullet) => (
+                  <li
+                    key={bullet}
+                    className="flex gap-[0.8mm] text-[2mm] leading-[1.15] text-sheet-text"
+                  >
+                    <span aria-hidden="true">•</span>
+                    <span className="min-w-0">{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            ))}
           </div>
 
           {/* Etiquetas de SKU/cor: máx. 4 por linha; sobras alinhadas à direita */}
@@ -73,8 +76,12 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
         </div>
 
         {/* Faixa inferior: tabelas técnicas + imagem + selo Inmetro */}
-        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm] pt-[1.5mm]">
+        <div
+          className="grid shrink-0 grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm]"
+          style={{ minHeight: `${tablesHeight}mm` }}
+        >
           <div className="grid min-h-0 grid-cols-2 items-start gap-x-[2.5mm]">
+
             <SpecTable
               headingLabel="NCM"
               headingValue={product.ncm}
