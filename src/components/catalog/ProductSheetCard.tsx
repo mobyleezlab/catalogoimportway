@@ -13,10 +13,6 @@ const ROW_COLORS = ["bg-[#f2f1ef]", "bg-[#e6e6e4]"];
 export function ProductSheetCard({ product }: { product: SheetProduct }) {
   const half = Math.ceil(product.bullets.length / 2);
   const columns = [product.bullets.slice(0, half), product.bullets.slice(half)];
-  const variantRows: SheetVariant[][] = [];
-  for (let i = 0; i < product.variants.length; i += 4) {
-    variantRows.push(product.variants.slice(i, i + 4));
-  }
 
   // Alturas e cores compartilhadas: linha a linha, NCM alinha com QUANTIDADE,
   // CÓDIGO DE BARRAS alinha com PESO (KG), e assim por diante.
@@ -88,15 +84,13 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
 
         {/* Coluna direita: etiquetas de SKU/cor no topo e a imagem ocupando todo o resto */}
         <div className="flex min-h-0 flex-col gap-[1mm]">
-          <div className="flex shrink-0 flex-col items-end gap-[1mm]">
-            {variantRows.map((row, index) => (
-              <div key={index} className="flex justify-end gap-[1mm]">
-                {row.map((variant) => (
-                  <VariantTag key={variant.sku} variant={variant} />
-                ))}
-              </div>
+          <div className="flex shrink-0 flex-nowrap items-start justify-end gap-[0.6mm]">
+            {product.variants.map((variant) => (
+              <VariantTag key={variant.sku} variant={variant} />
             ))}
           </div>
+
+
 
           <div className="relative min-h-0 flex-1">
             {product.image.url ? (
@@ -164,21 +158,25 @@ function VariantTag({ variant }: { variant: SheetVariant }) {
   return (
     <div
       className={cn(
-        "min-w-[13mm] rounded-[1mm] px-[1mm] py-[0.7mm] text-center leading-none",
+        "box-border flex h-[7mm] w-[12.5mm] flex-col items-center justify-center rounded-[1.2mm] px-[1.2mm] py-[1mm] text-center leading-none",
         accent
           ? "bg-sheet-navy text-sheet-navy-foreground"
           : "border-[0.25mm] border-sheet-edge bg-card text-sheet-navy",
       )}
     >
-      <p className="whitespace-nowrap text-[2.1mm] font-bold tracking-[0.01em]">
+      <p className="w-full truncate whitespace-nowrap text-[1.5mm] font-bold tracking-[0.01em]">
         {variant.sku}
       </p>
-      <p className="mt-[0.4mm] whitespace-nowrap text-[1.7mm] font-medium uppercase tracking-[0.04em]">
+      <p className="mt-[0.4mm] w-full truncate whitespace-nowrap text-[1.3mm] font-medium uppercase tracking-[0.04em]">
         {variant.color}
       </p>
     </div>
   );
 }
+
+
+
+
 
 function SpecTable({
   rows,
