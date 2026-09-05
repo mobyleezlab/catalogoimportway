@@ -44,10 +44,10 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
         <SheetTitle title={product.title} />
       </header>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-[1.2mm] px-[4mm] pb-[1.8mm] pt-[1.3mm]">
-        {/* Faixa superior: marcadores em duas colunas na metade esquerda, etiquetas de SKU/cor à direita */}
-        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm]">
-          <div className="grid min-w-0 grid-cols-2 gap-x-[3mm]">
+      <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm] px-[4mm] pb-[1.8mm] pt-[1.3mm]">
+        {/* Coluna esquerda: marcadores em duas colunas + tabelas técnicas */}
+        <div className="flex min-h-0 min-w-0 flex-col gap-[1.2mm]">
+          <div className="grid min-h-0 min-w-0 flex-1 grid-cols-2 gap-x-[3mm]">
             {columns.map((column, index) => (
               <ul key={index} className="min-w-0 space-y-[0.2mm]">
                 {column.map((bullet) => (
@@ -63,25 +63,10 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
             ))}
           </div>
 
-          {/* Etiquetas de SKU/cor: máx. 4 por linha; sobras alinhadas à direita */}
-          <div className="flex shrink-0 flex-col items-end gap-[1mm]">
-            {variantRows.map((row, index) => (
-              <div key={index} className="flex justify-end gap-[1mm]">
-                {row.map((variant) => (
-                  <VariantTag key={variant.sku} variant={variant} />
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Faixa inferior: tabelas técnicas + imagem + selo Inmetro */}
-        <div
-          className="grid shrink-0 grid-cols-[minmax(0,1fr)_78mm] gap-x-[2.5mm]"
-          style={{ minHeight: `${tablesHeight}mm` }}
-        >
-          <div className="grid min-h-0 grid-cols-2 items-start gap-x-[2.5mm]">
-
+          <div
+            className="grid shrink-0 grid-cols-2 items-start gap-x-[2.5mm]"
+            style={{ minHeight: `${tablesHeight}mm` }}
+          >
             <SpecTable
               headingLabel="NCM"
               headingValue={product.ncm}
@@ -99,24 +84,35 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
               flexRowIndex={flexRowIndex}
             />
           </div>
+        </div>
 
-          <div className="relative min-h-0">
-            <div className="h-full w-full">
-              {product.image.url ? (
-                <img
-                  src={product.image.url}
-                  alt={product.image.alt}
-                  className="h-full w-full object-contain"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center rounded-[1.2mm] border border-dashed border-sheet-edge">
-                  <span className="px-[3mm] text-center text-[2mm] uppercase tracking-[0.14em] text-sheet-text">
-                    Imagem do produto
-                  </span>
-                </div>
-              )}
-            </div>
+        {/* Coluna direita: etiquetas de SKU/cor no topo e a imagem ocupando todo o resto */}
+        <div className="flex min-h-0 flex-col gap-[1mm]">
+          <div className="flex shrink-0 flex-col items-end gap-[1mm]">
+            {variantRows.map((row, index) => (
+              <div key={index} className="flex justify-end gap-[1mm]">
+                {row.map((variant) => (
+                  <VariantTag key={variant.sku} variant={variant} />
+                ))}
+              </div>
+            ))}
+          </div>
+
+          <div className="relative min-h-0 flex-1">
+            {product.image.url ? (
+              <img
+                src={product.image.url}
+                alt={product.image.alt}
+                className="h-full w-full object-contain object-center"
+                loading="lazy"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center rounded-[1.2mm] border border-dashed border-sheet-edge">
+                <span className="px-[3mm] text-center text-[2mm] uppercase tracking-[0.14em] text-sheet-text">
+                  Imagem do produto
+                </span>
+              </div>
+            )}
 
             {/* Espaço reservado ao selo do Inmetro no canto da ficha */}
             <div className="absolute bottom-0 right-0 flex h-[13mm] w-[13mm] flex-col items-center justify-center rounded-[1.2mm] border-[0.25mm] border-dashed border-sheet-edge bg-sheet-value text-center">
@@ -130,6 +126,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
           </div>
         </div>
       </div>
+
     </article>
   );
 }
