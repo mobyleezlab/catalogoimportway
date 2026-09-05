@@ -13,10 +13,6 @@ const ROW_COLORS = ["bg-[#f2f1ef]", "bg-[#e6e6e4]"];
 export function ProductSheetCard({ product }: { product: SheetProduct }) {
   const half = Math.ceil(product.bullets.length / 2);
   const columns = [product.bullets.slice(0, half), product.bullets.slice(half)];
-  const variantRows: SheetVariant[][] = [];
-  for (let i = 0; i < product.variants.length; i += 4) {
-    variantRows.push(product.variants.slice(i, i + 4));
-  }
 
   // Alturas e cores compartilhadas: linha a linha, NCM alinha com QUANTIDADE,
   // CÓDIGO DE BARRAS alinha com PESO (KG), e assim por diante.
