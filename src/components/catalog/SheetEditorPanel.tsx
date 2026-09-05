@@ -109,6 +109,41 @@ export function SheetEditorPanel({
       <div className="flex-1 space-y-5 overflow-y-auto p-4">
         <section className="space-y-3">
           <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Informações do produto
+          </h3>
+          <div className="space-y-1.5">
+            <Label htmlFor="edit-title">Nome do produto</Label>
+            <Input
+              id="edit-title"
+              value={product.title}
+              onChange={(event) => update({ title: event.target.value })}
+              placeholder="Mini moto elétrica infantil"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="edit-bullets">Características (uma por linha)</Label>
+            <Textarea
+              id="edit-bullets"
+              rows={7}
+              value={product.bullets.join("\n")}
+              onChange={(event) =>
+                update({
+                  bullets: event.target.value
+                    .split("\n")
+                    .map((line) => line.replace(/^[•\-\s]+/, "")),
+                })
+              }
+              placeholder={"Bateria recarregável de 6V\nIndicado a partir de 3 anos"}
+            />
+            <p className="text-xs text-muted-foreground">
+              As linhas são divididas automaticamente nas duas colunas da ficha.
+            </p>
+          </div>
+        </section>
+
+        <section className="space-y-3 border-t pt-4">
+
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Tabela do produto
           </h3>
           <div className="space-y-1.5">
