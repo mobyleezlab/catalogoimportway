@@ -158,21 +158,22 @@ function VariantTag({ variant }: { variant: SheetVariant }) {
   return (
     <div
       className={cn(
-        "box-border flex min-h-0 min-w-[10.5mm] max-w-[16mm] flex-1 basis-0 flex-col items-center justify-center rounded-[1.2mm] px-[1.5mm] py-[1mm] text-center leading-none",
+        "box-border flex h-[7mm] w-[12.5mm] flex-col items-center justify-center rounded-[1.2mm] px-[1.5mm] py-[1mm] text-center leading-none",
         accent
           ? "bg-sheet-navy text-sheet-navy-foreground"
           : "border-[0.25mm] border-sheet-edge bg-card text-sheet-navy",
       )}
     >
-      <p className="w-full truncate whitespace-nowrap text-[1.8mm] font-bold tracking-[0.01em]">
+      <p className="w-full truncate whitespace-nowrap text-[1.5mm] font-bold tracking-[0.01em]">
         {variant.sku}
       </p>
-      <p className="mt-[0.5mm] w-full truncate whitespace-nowrap text-[1.5mm] font-medium uppercase tracking-[0.04em]">
+      <p className="mt-[0.5mm] w-full truncate whitespace-nowrap text-[1.3mm] font-medium uppercase tracking-[0.04em]">
         {variant.color}
       </p>
     </div>
   );
 }
+
 
 
 function SpecTable({
