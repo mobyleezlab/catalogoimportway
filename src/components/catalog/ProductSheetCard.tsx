@@ -84,15 +84,12 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
 
         {/* Coluna direita: etiquetas de SKU/cor no topo e a imagem ocupando todo o resto */}
         <div className="flex min-h-0 flex-col gap-[1mm]">
-          <div className="flex shrink-0 flex-col items-end gap-[1mm]">
-            {variantRows.map((row, index) => (
-              <div key={index} className="flex justify-end gap-[1mm]">
-                {row.map((variant) => (
-                  <VariantTag key={variant.sku} variant={variant} />
-                ))}
-              </div>
+          <div className="flex shrink-0 flex-nowrap items-start justify-end gap-[1mm]">
+            {product.variants.map((variant) => (
+              <VariantTag key={variant.sku} variant={variant} />
             ))}
           </div>
+
 
           <div className="relative min-h-0 flex-1">
             {product.image.url ? (
