@@ -170,8 +170,9 @@ function CatalogSheetPage() {
                     type="button"
                     onClick={() => setSelectedId(product.id)}
                     className={cn(
-                      "rounded-[2.5mm] text-left outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-ring print:pointer-events-none",
+                      "shrink-0 rounded-[2.5mm] text-left outline-none ring-offset-2 focus-visible:ring-2 focus-visible:ring-ring print:pointer-events-none",
                     )}
+
                   >
                     <ProductSheetCard product={product} />
                   </button>
