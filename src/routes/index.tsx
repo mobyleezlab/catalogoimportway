@@ -40,6 +40,7 @@ function CatalogSheetPage() {
   const { products, updateProduct, resetProducts } = useCatalogProducts();
   const [selectedId, setSelectedId] = useState(products[0]?.id ?? "");
   const [zoom, setZoom] = useState(1);
+  const [autoFit, setAutoFit] = useState(true);
   const [showMargins, setShowMargins] = useState(true);
   const viewportRef = useRef<HTMLElement | null>(null);
 
@@ -52,16 +53,26 @@ function CatalogSheetPage() {
       (el.clientHeight - padding) / (PAGE.height * MM),
     );
     setZoom(clamp(scale));
+    setAutoFit(true);
+  }, []);
+
+  const setManualZoom = useCallback((value: number | ((z: number) => number)) => {
+    setAutoFit(false);
+    setZoom((z) => clamp(typeof value === "function" ? value(z) : value));
   }, []);
 
   useEffect(() => {
     fitToView();
+  }, [fitToView]);
+
+  useEffect(() => {
+    if (!autoFit) return;
     const el = viewportRef.current;
     if (!el || typeof ResizeObserver === "undefined") return;
     const observer = new ResizeObserver(() => fitToView());
     observer.observe(el);
     return () => observer.disconnect();
-  }, [fitToView]);
+  }, [autoFit, fitToView]);
 
   return (
     <div className="flex min-h-screen bg-muted print:block print:bg-card">
@@ -75,14 +86,14 @@ function CatalogSheetPage() {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex flex-wrap items-center gap-2 border-b border-border bg-card px-4 py-2 print:hidden">
-          <Button variant="outline" size="icon" onClick={() => setZoom((z) => clamp(z - 0.1))}>
+          <Button variant="outline" size="icon" onClick={() => setManualZoom((z) => z - 0.1)}>
             <Minus className="size-4" />
             <span className="sr-only">Diminuir zoom</span>
           </Button>
           <span className="w-14 text-center text-sm tabular-nums text-muted-foreground">
             {Math.round(zoom * 100)}%
           </span>
-          <Button variant="outline" size="icon" onClick={() => setZoom((z) => clamp(z + 0.1))}>
+          <Button variant="outline" size="icon" onClick={() => setManualZoom((z) => z + 0.1)}>
             <Plus className="size-4" />
             <span className="sr-only">Aumentar zoom</span>
           </Button>
@@ -90,7 +101,7 @@ function CatalogSheetPage() {
             <Maximize2 className="mr-2 size-4" />
             Página inteira
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setZoom(1)}>
+          <Button variant="outline" size="sm" onClick={() => setManualZoom(1)}>
             100%
           </Button>
           <Button
@@ -122,16 +133,26 @@ function CatalogSheetPage() {
               }}
             >
               {showMargins ? (
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute border border-dashed border-ring/60 print:hidden"
-                  style={{
-                    top: `${MARGINS.top}mm`,
-                    bottom: `${MARGINS.bottom}mm`,
-                    left: `${MARGINS.left}mm`,
-                    right: `${MARGINS.right}mm`,
-                  }}
-                />
+                <div aria-hidden="true" className="pointer-events-none absolute inset-0 print:hidden">
+                  {/* Linhas horizontais (margens superior e inferior) atravessando a página */}
+                  <div
+                    className="absolute left-0 right-0 border-t border-dashed border-ring/60"
+                    style={{ top: `${MARGINS.top}mm` }}
+                  />
+                  <div
+                    className="absolute left-0 right-0 border-t border-dashed border-ring/60"
+                    style={{ bottom: `${MARGINS.bottom}mm` }}
+                  />
+                  {/* Linhas verticais (margens esquerda e direita) atravessando a página */}
+                  <div
+                    className="absolute top-0 bottom-0 border-l border-dashed border-ring/60"
+                    style={{ left: `${MARGINS.left}mm` }}
+                  />
+                  <div
+                    className="absolute top-0 bottom-0 border-l border-dashed border-ring/60"
+                    style={{ right: `${MARGINS.right}mm` }}
+                  />
+                </div>
               ) : null}
 
               <div
