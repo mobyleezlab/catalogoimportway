@@ -35,7 +35,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
   );
 
   return (
-    <article className="flex h-[65mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page font-sheet">
+    <article className="flex h-[65.75mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page font-sheet">
       <header className="bg-sheet-navy px-[4mm] py-[1.8mm]">
         <SheetTitle title={product.title} />
       </header>
