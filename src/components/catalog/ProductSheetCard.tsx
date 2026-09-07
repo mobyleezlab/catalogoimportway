@@ -35,7 +35,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
   );
 
   return (
-    <article className="flex h-[65.75mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page font-sheet">
+    <article className="flex h-[65.75mm] w-[177mm] flex-col overflow-hidden border-[0.3mm] border-sheet-edge bg-sheet-page font-sheet">
       <header className="bg-sheet-navy px-[4mm] py-[1.8mm]">
         <SheetTitle title={product.title} />
       </header>
@@ -101,7 +101,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
                 loading="lazy"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center rounded-[1.2mm] border border-dashed border-sheet-edge">
+              <div className="flex h-full w-full items-center justify-center border border-dashed border-sheet-edge">
                 <span className="px-[3mm] text-center text-[2mm] uppercase tracking-[0.14em] text-sheet-text">
                   Imagem do produto
                 </span>
@@ -109,7 +109,7 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
             )}
 
             {/* Espaço reservado ao selo do Inmetro no canto da ficha */}
-            <div className="absolute bottom-0 right-0 flex h-[13mm] w-[13mm] flex-col items-center justify-center rounded-[1.2mm] border-[0.25mm] border-dashed border-sheet-edge bg-sheet-value text-center">
+            <div className="absolute bottom-0 right-0 flex h-[13mm] w-[13mm] flex-col items-center justify-center border-[0.25mm] border-dashed border-sheet-edge bg-sheet-value text-center">
               <span className="text-[1.8mm] font-bold uppercase leading-[1.15] tracking-[0.06em] text-sheet-navy">
                 Inmetro
               </span>
@@ -158,7 +158,7 @@ function VariantTag({ variant }: { variant: SheetVariant }) {
   return (
     <div
       className={cn(
-        "box-border flex h-[7mm] w-[12.5mm] flex-col items-center justify-center rounded-[1.2mm] px-[1.2mm] py-[1mm] text-center leading-none",
+        "box-border flex h-[7mm] w-[12.5mm] flex-col items-center justify-center px-[1.2mm] py-[1mm] text-center leading-none",
         accent
           ? "bg-sheet-navy text-sheet-navy-foreground"
           : "border-[0.25mm] border-sheet-edge bg-card text-sheet-navy",
@@ -215,7 +215,7 @@ function SpecTable({
     <div>
       <div
         className={cn(
-          "flex h-[2.6mm] w-[54%] items-center justify-center rounded-t-[2mm] px-[1.4mm]",
+          "flex h-[3.2mm] w-[54%] items-center justify-center px-[1.4mm]",
           heading ? "bg-sheet-master" : "invisible",
         )}
       >
@@ -224,7 +224,7 @@ function SpecTable({
         </span>
       </div>
 
-      <div className="overflow-hidden rounded-[2mm]">
+      <div className="overflow-hidden">
         <table className="w-full table-fixed border-collapse text-[2.1mm]">
           <tbody>
             {headingLabel
@@ -266,7 +266,7 @@ function SpecTable({
                               <span
                                 aria-hidden="true"
                                 className={cn(
-                                  "h-[1.5mm] w-[1.5mm] shrink-0 rounded-full",
+                                  "h-[1.5mm] w-[1.5mm] shrink-0",
                                   barcode.tone === "accent"
                                     ? "bg-sheet-navy"
                                     : "border-[0.25mm] border-sheet-edge bg-card",
