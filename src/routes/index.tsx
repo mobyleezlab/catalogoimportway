@@ -5,6 +5,7 @@ import { ProductSheetCard } from "@/components/catalog/ProductSheetCard";
 import { SheetEditorPanel } from "@/components/catalog/SheetEditorPanel";
 import { Button } from "@/components/ui/button";
 import { useCatalogProducts } from "@/hooks/useCatalogProducts";
+import { CARD_GAP_MM, HEADER_MARGIN, MARGINS, PAGE } from "@/lib/sheet-layout";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -27,9 +28,6 @@ export const Route = createFileRoute("/")({
   component: CatalogSheetPage,
 });
 
-/** Margens da página em milímetros. */
-const MARGINS = { top: 22, bottom: 10, left: 21.5, right: 21.5 };
-const PAGE = { width: 220, height: 307 };
 const MM = 96 / 25.4;
 const MIN_ZOOM = 0.2;
 const MAX_ZOOM = 3;
