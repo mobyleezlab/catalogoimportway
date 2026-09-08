@@ -158,7 +158,7 @@ function CatalogSheetPage() {
               ) : null}
 
               <div
-                className="pointer-events-none absolute flex items-center justify-center font-sheet text-[12pt] font-bold uppercase tracking-[0.04em] text-sheet-navy"
+                className="pointer-events-none absolute flex items-center justify-start font-sheet text-[12pt] font-bold uppercase tracking-[0.04em] text-sheet-navy"
                 style={{
                   top: `${MARGINS.top}mm`,
                   left: `${MARGINS.left}mm`,
