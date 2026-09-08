@@ -139,6 +139,10 @@ function CatalogSheetPage() {
                   />
                   <div
                     className="absolute left-0 right-0 border-t border-dashed border-ring/60"
+                    style={{ top: `${MARGINS.top + HEADER_MARGIN}mm` }}
+                  />
+                  <div
+                    className="absolute left-0 right-0 border-t border-dashed border-ring/60"
                     style={{ bottom: `${MARGINS.bottom}mm` }}
                   />
                   {/* Linhas verticais (margens esquerda e direita) atravessando a página */}
@@ -154,9 +158,22 @@ function CatalogSheetPage() {
               ) : null}
 
               <div
-                className="flex h-full flex-col items-center gap-[4mm]"
+                className="pointer-events-none absolute flex items-center justify-center font-sheet text-[12pt] font-bold uppercase tracking-[0.04em] text-sheet-navy"
                 style={{
-                  paddingTop: `${MARGINS.top}mm`,
+                  top: `${MARGINS.top}mm`,
+                  left: `${MARGINS.left}mm`,
+                  right: `${MARGINS.right}mm`,
+                  height: `${HEADER_MARGIN}mm`,
+                }}
+              >
+                CATÁLOGO IMPORTWAY
+              </div>
+
+              <div
+                className="flex h-full flex-col items-center"
+                style={{
+                  gap: CARD_GAP_MM,
+                  paddingTop: `${MARGINS.top + HEADER_MARGIN}mm`,
                   paddingBottom: `${MARGINS.bottom}mm`,
                   paddingLeft: `${MARGINS.left}mm`,
                   paddingRight: `${MARGINS.right}mm`,

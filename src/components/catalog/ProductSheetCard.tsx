@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import type { SheetBarcode, SheetProduct, SheetRow, SheetVariant } from "@/data/sheet-products";
+import { CARD_HEIGHT } from "@/lib/sheet-layout";
 import { cn } from "@/lib/utils";
 
 /** Altura fixa das células para que NCM e MASTER fiquem na mesma direção. */
@@ -9,7 +10,7 @@ const CELL =
 /** Cores alternadas das linhas das tabelas. */
 const ROW_COLORS = ["bg-[#f2f1ef]", "bg-[#e6e6e4]"];
 
-/** Ficha de produto no formato impresso de 177 x 65 mm. */
+/** Ficha de produto no formato impresso. */
 export function ProductSheetCard({ product }: { product: SheetProduct }) {
   const half = Math.ceil(product.bullets.length / 2);
   const columns = [product.bullets.slice(0, half), product.bullets.slice(half)];
@@ -35,7 +36,10 @@ export function ProductSheetCard({ product }: { product: SheetProduct }) {
   );
 
   return (
-    <article className="flex h-[65.75mm] w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page font-sheet">
+    <article
+      className="flex w-[177mm] flex-col overflow-hidden rounded-[2.5mm] border-[0.3mm] border-sheet-edge bg-sheet-page font-sheet"
+      style={{ height: `${CARD_HEIGHT}mm` }}
+    >
       <header className="bg-sheet-navy px-[4mm] py-[1.8mm]">
         <SheetTitle title={product.title} />
       </header>
