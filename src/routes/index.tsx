@@ -5,6 +5,7 @@ import { ProductSheetCard } from "@/components/catalog/ProductSheetCard";
 import { SheetEditorPanel } from "@/components/catalog/SheetEditorPanel";
 import { Button } from "@/components/ui/button";
 import { useCatalogProducts } from "@/hooks/useCatalogProducts";
+import { CARD_GAP_MM, HEADER_MARGIN, MARGINS, PAGE } from "@/lib/sheet-layout";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -27,9 +28,6 @@ export const Route = createFileRoute("/")({
   component: CatalogSheetPage,
 });
 
-/** Margens da página em milímetros. */
-const MARGINS = { top: 22, bottom: 10, left: 21.5, right: 21.5 };
-const PAGE = { width: 220, height: 307 };
 const MM = 96 / 25.4;
 const MIN_ZOOM = 0.2;
 const MAX_ZOOM = 3;
@@ -141,6 +139,10 @@ function CatalogSheetPage() {
                   />
                   <div
                     className="absolute left-0 right-0 border-t border-dashed border-ring/60"
+                    style={{ top: `${MARGINS.top + HEADER_MARGIN}mm` }}
+                  />
+                  <div
+                    className="absolute left-0 right-0 border-t border-dashed border-ring/60"
                     style={{ bottom: `${MARGINS.bottom}mm` }}
                   />
                   {/* Linhas verticais (margens esquerda e direita) atravessando a página */}
@@ -156,9 +158,22 @@ function CatalogSheetPage() {
               ) : null}
 
               <div
-                className="flex h-full flex-col items-center gap-[4mm]"
+                className="pointer-events-none absolute flex items-center justify-center font-sheet text-[12pt] font-bold uppercase tracking-[0.04em] text-sheet-navy"
                 style={{
-                  paddingTop: `${MARGINS.top}mm`,
+                  top: `${MARGINS.top}mm`,
+                  left: `${MARGINS.left}mm`,
+                  right: `${MARGINS.right}mm`,
+                  height: `${HEADER_MARGIN}mm`,
+                }}
+              >
+                CATÁLOGO IMPORTWAY
+              </div>
+
+              <div
+                className="flex h-full flex-col items-center"
+                style={{
+                  gap: CARD_GAP_MM,
+                  paddingTop: `${MARGINS.top + HEADER_MARGIN}mm`,
                   paddingBottom: `${MARGINS.bottom}mm`,
                   paddingLeft: `${MARGINS.left}mm`,
                   paddingRight: `${MARGINS.right}mm`,
