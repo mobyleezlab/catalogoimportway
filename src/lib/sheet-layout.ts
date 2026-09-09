@@ -24,7 +24,9 @@ export const HEADER_MARGIN = 10;
 const CARD_GAP = 4;
 const CARDS_PER_PAGE = 4;
 
-const contentTop = MARGINS.top + HEADER_MARGIN;
+// O título fica colado na margem de segurança superior; as fichas começam
+// logo abaixo da faixa do título.
+const contentTop = SAFETY_MARGIN.top + HEADER_MARGIN;
 const contentBottom = MARGINS.bottom;
 
 export const CARD_HEIGHT =

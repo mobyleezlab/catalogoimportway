@@ -156,20 +156,11 @@ function CatalogSheetPage() {
                     style={{ right: `${SAFETY_MARGIN.right}mm` }}
                   />
 
-                  {/* Linhas horizontais (margens superior e inferior) atravessando a página */}
-                  <div
-                    className="absolute left-0 right-0 border-t border-dashed border-ring/60"
-                    style={{ top: `${MARGINS.top}mm` }}
-                  />
-                  <div
-                    className="absolute left-0 right-0 border-t border-dashed border-ring/60"
-                    style={{ top: `${MARGINS.top + HEADER_MARGIN}mm` }}
-                  />
+                  {/* Linhas horizontais e verticais das margens de conteúdo. */}
                   <div
                     className="absolute left-0 right-0 border-t border-dashed border-ring/60"
                     style={{ bottom: `${MARGINS.bottom}mm` }}
                   />
-                  {/* Linhas verticais (margens esquerda e direita) atravessando a página */}
                   <div
                     className="absolute top-0 bottom-0 border-l border-dashed border-ring/60"
                     style={{ left: `${MARGINS.left}mm` }}
@@ -184,7 +175,7 @@ function CatalogSheetPage() {
               <div
                 className="pointer-events-none absolute flex items-start justify-start leading-none font-sheet text-[12pt] font-bold uppercase tracking-[0.04em] text-sheet-navy"
                 style={{
-                  top: `${MARGINS.top}mm`,
+                  top: `${SAFETY_MARGIN.top}mm`,
                   left: `${MARGINS.left}mm`,
                   right: `${MARGINS.right}mm`,
                   height: `${HEADER_MARGIN}mm`,
@@ -197,7 +188,7 @@ function CatalogSheetPage() {
                 className="flex h-full flex-col items-center"
                 style={{
                   gap: CARD_GAP_MM,
-                  paddingTop: `${MARGINS.top + HEADER_MARGIN}mm`,
+                  paddingTop: `${SAFETY_MARGIN.top + HEADER_MARGIN}mm`,
                   paddingBottom: `${MARGINS.bottom}mm`,
                   paddingLeft: `${MARGINS.left}mm`,
                   paddingRight: `${MARGINS.right}mm`,
