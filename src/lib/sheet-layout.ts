@@ -10,6 +10,14 @@ export const MARGINS = {
   right: 21.5,
 } as const;
 
+/** Margem de segurança da página — nada deve ultrapassar esses limites. */
+export const SAFETY_MARGIN = {
+  top: 10,
+  bottom: 10,
+  left: 10,
+  right: 10,
+} as const;
+
 /** Margem adicional no topo reservada ao título fixo do catálogo. */
 export const HEADER_MARGIN = 10;
 

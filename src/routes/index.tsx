@@ -5,7 +5,13 @@ import { ProductSheetCard } from "@/components/catalog/ProductSheetCard";
 import { SheetEditorPanel } from "@/components/catalog/SheetEditorPanel";
 import { Button } from "@/components/ui/button";
 import { useCatalogProducts } from "@/hooks/useCatalogProducts";
-import { CARD_GAP_MM, HEADER_MARGIN, MARGINS, PAGE } from "@/lib/sheet-layout";
+import {
+  CARD_GAP_MM,
+  HEADER_MARGIN,
+  MARGINS,
+  PAGE,
+  SAFETY_MARGIN,
+} from "@/lib/sheet-layout";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -132,6 +138,24 @@ function CatalogSheetPage() {
             >
               {showMargins ? (
                 <div aria-hidden="true" className="pointer-events-none absolute inset-0 print:hidden">
+                  {/* Margem de segurança (azul ciano) */}
+                  <div
+                    className="absolute left-0 right-0 border-t border-dashed border-safety/70"
+                    style={{ top: `${SAFETY_MARGIN.top}mm` }}
+                  />
+                  <div
+                    className="absolute left-0 right-0 border-t border-dashed border-safety/70"
+                    style={{ bottom: `${SAFETY_MARGIN.bottom}mm` }}
+                  />
+                  <div
+                    className="absolute top-0 bottom-0 border-l border-dashed border-safety/70"
+                    style={{ left: `${SAFETY_MARGIN.left}mm` }}
+                  />
+                  <div
+                    className="absolute top-0 bottom-0 border-l border-dashed border-safety/70"
+                    style={{ right: `${SAFETY_MARGIN.right}mm` }}
+                  />
+
                   {/* Linhas horizontais (margens superior e inferior) atravessando a página */}
                   <div
                     className="absolute left-0 right-0 border-t border-dashed border-ring/60"
